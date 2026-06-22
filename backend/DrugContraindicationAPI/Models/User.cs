@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+
 namespace DrugContraindicationAPI.Models
 {
     public class User
@@ -19,7 +20,7 @@ namespace DrugContraindicationAPI.Models
         [MaxLength(200)]
         public string Password { get; set; } = string.Empty;
 
-        [MaxLength(100)]
+        [MaxLength(50)]
         public string Role { get; set; } = "User";
     }
 }

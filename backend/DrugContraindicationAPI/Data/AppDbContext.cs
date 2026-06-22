@@ -12,6 +12,8 @@ namespace DrugContraindicationAPI.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<History> Histories { get; set; }
+
         public DbSet<Drug> Drugs { get; set; }
 
         public DbSet<Disease> Diseases { get; set; }
@@ -19,7 +21,5 @@ namespace DrugContraindicationAPI.Data
         public DbSet<Contraindication> Contraindications { get; set; }
 
         public DbSet<Interaction> Interactions { get; set; }
-
-        public DbSet<History> Histories { get; set; }
     }
 }

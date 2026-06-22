@@ -17,6 +17,7 @@ namespace DrugContraindicationAPI.Controllers
             _context = context;
         }
 
+        // GET: api/History
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,6 +28,7 @@ namespace DrugContraindicationAPI.Controllers
             return Ok(histories);
         }
 
+        // GET: api/History/user/1
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetByUserId(int userId)
         {
@@ -38,6 +40,7 @@ namespace DrugContraindicationAPI.Controllers
             return Ok(histories);
         }
 
+        // GET: api/History/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -49,11 +52,17 @@ namespace DrugContraindicationAPI.Controllers
             return Ok(history);
         }
 
+        // POST: api/History
         [HttpPost]
         public async Task<IActionResult> Save(HistoryDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var userExists = await _context.Users.AnyAsync(x => x.Id == dto.UserId);
+
+            if (!userExists)
+                return BadRequest(new { message = "Người dùng không tồn tại, không thể lưu lịch sử." });
 
             var history = new History
             {
@@ -73,6 +82,7 @@ namespace DrugContraindicationAPI.Controllers
             });
         }
 
+        // DELETE: api/History/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -85,6 +95,23 @@ namespace DrugContraindicationAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Xóa lịch sử thành công." });
+        }
+
+        // DELETE: api/History/user/1
+        [HttpDelete("user/{userId}")]
+        public async Task<IActionResult> DeleteByUserId(int userId)
+        {
+            var histories = await _context.Histories
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+
+            if (histories.Count == 0)
+                return NotFound(new { message = "Người dùng này chưa có lịch sử để xóa." });
+
+            _context.Histories.RemoveRange(histories);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Xóa toàn bộ lịch sử của người dùng thành công." });
         }
     }
 }
