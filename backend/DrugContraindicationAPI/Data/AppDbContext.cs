@@ -21,5 +21,6 @@ namespace DrugContraindicationAPI.Data
         public DbSet<Interaction> Interactions { get; set; }
 
         public DbSet<History> Histories { get; set; }
+        public DbSet<Recommendation> Recommendations { get; set; }
     }
 }
