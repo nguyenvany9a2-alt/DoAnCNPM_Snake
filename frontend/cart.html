@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - DrugSafe</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <div class="logo">Drug<span>Safe</span></div>
+
+        <nav class="nav">
+            <a href="index.html">Trang chủ</a>
+            <a href="check.html">Kiểm tra</a>
+            <a href="drugstore.html">DrugStore</a>
+            <a href="history.html">Lịch sử</a>
+            <a href="cart.html" class="cart-link">Giỏ hàng <span id="cartBadge">0</span></a>
+        </nav>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Giỏ hàng DrugStore</h2>
+        <p class="section-desc">
+            Danh sách sản phẩm đã chọn trong DrugStore. Đây là chức năng mô phỏng phục vụ demo đồ án.
+        </p>
+
+        <div class="cart-layout">
+            <div id="cartItems" class="cart-items"></div>
+
+            <div class="cart-summary">
+                <h3>Tóm tắt giỏ hàng</h3>
+
+                <div class="summary-row">
+                    <span>Số lượng sản phẩm</span>
+                    <strong id="totalQuantity">0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Tổng tiền</span>
+                    <strong id="totalPrice">0đ</strong>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%; margin-top:18px;" onclick="mockCheckout()">
+                    Xác nhận giỏ hàng
+                </button>
+
+                <a href="drugstore.html" class="btn btn-light" style="width:100%; margin-top:12px;">
+                    Tiếp tục xem sản phẩm
+                </a>
+
+                <div class="guide-box">
+                    <strong>Lưu ý:</strong>
+                    <ul>
+                        <li>Giỏ hàng chỉ là chức năng mô phỏng.</li>
+                        <li>Không thực hiện mua bán thuốc thật.</li>
+                        <li>Người dùng cần tham khảo ý kiến chuyên môn trước khi sử dụng thuốc.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="toast" class="toast">Cập nhật giỏ hàng</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 DrugSafe - Giỏ hàng Demo</p>
+    </div>
+</footer>
+
+<script src="js/store-data.js"></script>
+<script src="js/cart.js"></script>
+
+</body>
+</html>

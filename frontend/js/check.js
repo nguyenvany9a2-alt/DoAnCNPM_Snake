@@ -1,5 +1,13 @@
 let selectedDrugs = [];
 
+const demoDrugs = [
+    { drugId: 1, drugName: "Paracetamol" },
+    { drugId: 2, drugName: "Aspirin" },
+    { drugId: 3, drugName: "Ibuprofen" },
+    { drugId: 4, drugName: "Warfarin" },
+    { drugId: 5, drugName: "Metformin" }
+];
+
 const demoDiseases = [
     { id: 1, diseaseName: "Viêm loét dạ dày" },
     { id: 2, diseaseName: "Hen suyễn" },
@@ -9,6 +17,7 @@ const demoDiseases = [
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
+    loadDrugs();
     loadDiseases();
 
     document.getElementById("addDrugBtn").addEventListener("click", addDrug);
@@ -16,8 +25,35 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("checkInteractionBtn").addEventListener("click", checkInteraction);
 });
 
+async function loadDrugs() {
+    const drugSelect = document.getElementById("drugSelect");
+
+    drugSelect.innerHTML = `<option value="">-- Chọn thuốc --</option>`;
+
+    try {
+        const drugs = await apiRequest("/Drug");
+
+        drugs.forEach(drug => {
+            const option = document.createElement("option");
+            option.value = drug.drugName;
+            option.textContent = drug.drugName;
+            drugSelect.appendChild(option);
+        });
+
+    } catch {
+        demoDrugs.forEach(drug => {
+            const option = document.createElement("option");
+            option.value = drug.drugName;
+            option.textContent = drug.drugName;
+            drugSelect.appendChild(option);
+        });
+    }
+}
+
 async function loadDiseases() {
     const diseaseSelect = document.getElementById("diseaseSelect");
+
+    diseaseSelect.innerHTML = `<option value="">-- Chọn bệnh nền --</option>`;
 
     try {
         const diseases = await apiRequest("/Disease");
@@ -42,26 +78,21 @@ async function loadDiseases() {
 function addDrug() {
     clearMessage("checkMessage");
 
-    const drugInput = document.getElementById("drugInput");
-    const drugName = drugInput.value.trim();
+    const drugSelect = document.getElementById("drugSelect");
+    const drugName = drugSelect.value;
 
     if (!drugName) {
-        showMessage("checkMessage", "Vui lòng nhập tên thuốc.");
-        return;
-    }
-
-    if (hasSpecialDangerousChars(drugName)) {
-        showMessage("checkMessage", "Tên thuốc không được chứa ký tự đặc biệt nguy hiểm.");
+        showMessage("checkMessage", "Vui lòng chọn một thuốc trong danh mục.");
         return;
     }
 
     if (selectedDrugs.includes(drugName)) {
-        showMessage("checkMessage", "Thuốc này đã được thêm.");
+        showMessage("checkMessage", "Thuốc này đã được thêm vào danh sách.");
         return;
     }
 
     selectedDrugs.push(drugName);
-    drugInput.value = "";
+    drugSelect.value = "";
 
     renderDrugList();
 }
@@ -69,6 +100,15 @@ function addDrug() {
 function renderDrugList() {
     const drugList = document.getElementById("drugList");
     drugList.innerHTML = "";
+
+    if (selectedDrugs.length === 0) {
+        drugList.innerHTML = `
+            <p style="color:#6b7280; margin-top:12px;">
+                Chưa có thuốc nào được chọn.
+            </p>
+        `;
+        return;
+    }
 
     selectedDrugs.forEach((drug, index) => {
         const item = document.createElement("div");
@@ -94,7 +134,7 @@ async function checkContraindication() {
     const diseaseName = document.getElementById("diseaseSelect").value;
 
     if (selectedDrugs.length === 0) {
-        showMessage("checkMessage", "Vui lòng nhập ít nhất một thuốc.");
+        showMessage("checkMessage", "Vui lòng chọn ít nhất một thuốc.");
         return;
     }
 
@@ -110,7 +150,6 @@ async function checkContraindication() {
 
     try {
         const result = await apiRequest("/Check/contraindication", "POST", requestData);
-
         saveResult("contraindication", requestData, result);
 
     } catch {
@@ -129,7 +168,7 @@ async function checkInteraction() {
     clearMessage("checkMessage");
 
     if (selectedDrugs.length < 2) {
-        showMessage("checkMessage", "Cần nhập ít nhất 2 thuốc để kiểm tra tương tác.");
+        showMessage("checkMessage", "Cần chọn ít nhất 2 thuốc để kiểm tra tương tác.");
         return;
     }
 
@@ -139,7 +178,6 @@ async function checkInteraction() {
 
     try {
         const result = await apiRequest("/Check/interaction", "POST", requestData);
-
         saveResult("interaction", requestData, result);
 
     } catch {

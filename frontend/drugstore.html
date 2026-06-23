@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrugStore - DrugSafe</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <div class="logo">Drug<span>Safe</span></div>
+
+        <nav class="nav">
+            <a href="index.html">Trang chủ</a>
+            <a href="check.html">Kiểm tra</a>
+            <a href="drugstore.html">DrugStore</a>
+            <a href="history.html">Lịch sử</a>
+            <a href="login.html">Đăng nhập</a>
+            <a href="cart.html" class="cart-link">Giỏ hàng <span id="cartBadge">0</span></a>
+        </nav>
+    </div>
+</header>
+
+<section class="store-hero">
+    <div class="container store-hero-content">
+        <div>
+            <span class="premium-label">DrugStore Demo</span>
+            <h1>Danh mục sản phẩm chăm sóc sức khỏe</h1>
+            <p>
+                Khám phá các sản phẩm y tế mô phỏng, xem thông tin hoạt chất, cảnh báo
+                và thêm vào giỏ hàng để phục vụ demo hệ thống.
+            </p>
+            <div class="hero-actions">
+                <a href="#productList" class="btn btn-light">Xem sản phẩm</a>
+                <a href="check.html" class="btn btn-outline">Kiểm tra thuốc</a>
+            </div>
+        </div>
+
+        <div class="store-hero-card">
+            <div class="hero-product-icon">💊</div>
+            <h3>An toàn trước khi sử dụng</h3>
+            <p>DrugSafe kết hợp danh mục sản phẩm với chức năng kiểm tra chống chỉ định.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">DrugStore</h2>
+        <p class="section-desc">
+            Giao diện thương mại điện tử mô phỏng, phù hợp chủ đề kiểm tra chống chỉ định thuốc.
+        </p>
+
+        <div class="store-toolbar">
+            <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+
+            <select id="categoryFilter" class="form-control">
+                <option value="all">Tất cả danh mục</option>
+            </select>
+        </div>
+
+        <div id="productList" class="product-grid"></div>
+    </div>
+</section>
+
+<div id="toast" class="toast">Đã thêm vào giỏ hàng</div>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 DrugSafe - DrugStore Demo</p>
+    </div>
+</footer>
+
+<script src="js/store-data.js"></script>
+<script src="js/store.js"></script>
+
+</body>
+</html>
