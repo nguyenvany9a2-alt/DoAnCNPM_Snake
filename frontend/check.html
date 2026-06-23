@@ -2,14 +2,16 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Kiểm tra thuốc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra thuốc - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
     <div class="container header-content">
-        <div class="logo">Drug Safe</div>
+        <div class="logo">Drug<span>Safe</span></div>
+
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
             <a href="check.html">Kiểm tra</a>
@@ -21,48 +23,80 @@
 
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Kiểm tra chống chỉ định thuốc</h2>
+        <h2 class="section-title">Kiểm tra chống chỉ định và tương tác thuốc</h2>
+        <p class="section-desc">
+            Nhập thuốc đang sử dụng và chọn bệnh nền để hệ thống phân tích nguy cơ.
+        </p>
 
         <div id="checkMessage" class="message"></div>
 
         <div class="check-layout">
             <div class="card">
-                <h3>Nhập thông tin thuốc</h3>
+                <div class="card-icon">💊</div>
+                <h3>Danh sách thuốc</h3>
 
                 <div class="form-group">
-                    <label>Tên thuốc</label>
-                    <input type="text" id="drugInput" class="form-control" placeholder="Ví dụ: Aspirin">
+                    <label for="drugInput">Tên thuốc</label>
+                    <input 
+                        type="text" 
+                        id="drugInput" 
+                        class="form-control" 
+                        placeholder="Ví dụ: Aspirin, Paracetamol, Warfarin"
+                    >
                 </div>
 
-                <button id="addDrugBtn" class="btn btn-primary">Thêm thuốc</button>
+                <button id="addDrugBtn" class="btn btn-primary">
+                    Thêm thuốc
+                </button>
 
                 <div class="drug-list" id="drugList"></div>
+
+                <div class="guide-box">
+                    <strong>Hướng dẫn nhập thuốc:</strong>
+                    <ul>
+                        <li>Nhập từng thuốc rồi bấm nút "Thêm thuốc".</li>
+                        <li>Có thể nhập nhiều thuốc để kiểm tra tương tác.</li>
+                        <li>Không nhập ký tự đặc biệt như &lt;, &gt;, $, %, { }.</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="card">
+                <div class="card-icon">🩺</div>
                 <h3>Thông tin bệnh nền</h3>
 
                 <div class="form-group">
-                    <label>Chọn bệnh nền</label>
+                    <label for="diseaseSelect">Chọn bệnh nền</label>
                     <select id="diseaseSelect" class="form-control">
                         <option value="">-- Chọn bệnh nền --</option>
                     </select>
                 </div>
 
-                <button id="checkContraBtn" class="btn btn-danger" style="margin-bottom:10px;">
+                <button id="checkContraBtn" class="btn btn-danger" style="width:100%; margin-bottom:12px;">
                     Kiểm tra chống chỉ định
                 </button>
 
-                <button id="checkInteractionBtn" class="btn btn-warning">
+                <button id="checkInteractionBtn" class="btn btn-warning" style="width:100%;">
                     Kiểm tra tương tác thuốc
                 </button>
+
+                <div class="guide-box">
+                    <strong>Lưu ý:</strong>
+                    <ul>
+                        <li>Kết quả chỉ mang tính hỗ trợ tham khảo.</li>
+                        <li>Không thay thế tư vấn từ bác sĩ hoặc dược sĩ.</li>
+                        <li>Nên kiểm tra kỹ với người có bệnh nền nghiêm trọng.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <footer class="footer">
-    <p>© 2026 Drug Safe - Đồ án Công nghệ phần mềm</p>
+    <div class="container">
+        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+    </div>
 </footer>
 
 <script src="js/api.js"></script>

@@ -2,14 +2,16 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Hệ thống kiểm tra chống chỉ định thuốc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrugSafe - Kiểm tra chống chỉ định thuốc</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
     <div class="container header-content">
-        <div class="logo">Drug Safe</div>
+        <div class="logo">Drug<span>Safe</span></div>
+
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
             <a href="check.html">Kiểm tra</a>
@@ -22,37 +24,90 @@
 
 <section class="hero">
     <div class="container">
-        <h1>Hệ thống kiểm tra chống chỉ định thuốc</h1>
-        <p>Hỗ trợ kiểm tra thuốc với bệnh nền, tương tác thuốc và gợi ý phương án an toàn hơn.</p>
-        <a href="check.html" class="btn btn-light">Kiểm tra ngay</a>
+        <div class="hero-box">
+            <h1>Kiểm tra chống chỉ định thuốc nhanh chóng và an toàn</h1>
+            <p>
+                Hệ thống hỗ trợ người dùng kiểm tra thuốc với bệnh nền,
+                phát hiện tương tác thuốc và đưa ra gợi ý sử dụng an toàn hơn.
+            </p>
+
+            <div class="hero-actions">
+                <a href="check.html" class="btn btn-light">Kiểm tra ngay</a>
+                <a href="#features" class="btn btn-outline">Xem chức năng</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="features">
+    <div class="container">
+        <h2 class="section-title">Chức năng nổi bật</h2>
+        <p class="section-desc">
+            Hệ thống được xây dựng nhằm hỗ trợ kiểm tra rủi ro khi sử dụng thuốc
+            cho người có bệnh nền hoặc dùng nhiều loại thuốc cùng lúc.
+        </p>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">💊</div>
+                <h3>Kiểm tra chống chỉ định</h3>
+                <p>
+                    Phát hiện thuốc không phù hợp với tình trạng bệnh nền của người dùng.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">⚠️</div>
+                <h3>Cảnh báo tương tác thuốc</h3>
+                <p>
+                    Kiểm tra nguy cơ tương tác khi sử dụng nhiều loại thuốc cùng lúc.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">✅</div>
+                <h3>Gợi ý an toàn hơn</h3>
+                <p>
+                    Đề xuất thuốc thay thế hoặc hướng xử lý phù hợp khi có cảnh báo.
+                </p>
+            </div>
+        </div>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Chức năng chính</h2>
+        <h2 class="section-title">Quy trình sử dụng</h2>
+        <p class="section-desc">
+            Người dùng chỉ cần nhập thuốc, chọn bệnh nền và xem kết quả cảnh báo.
+        </p>
 
         <div class="cards">
             <div class="card">
-                <h3>Kiểm tra chống chỉ định</h3>
-                <p>Phát hiện thuốc không phù hợp với bệnh nền của người dùng.</p>
+                <div class="card-icon">1</div>
+                <h3>Nhập thông tin</h3>
+                <p>Nhập tên thuốc và chọn bệnh nền cần kiểm tra.</p>
             </div>
 
             <div class="card">
-                <h3>Kiểm tra tương tác thuốc</h3>
-                <p>So sánh các thuốc trong đơn để cảnh báo tương tác nguy hiểm.</p>
+                <div class="card-icon">2</div>
+                <h3>Phân tích dữ liệu</h3>
+                <p>Hệ thống truy vấn dữ liệu chống chỉ định và tương tác thuốc.</p>
             </div>
 
             <div class="card">
-                <h3>Gợi ý thuốc thay thế</h3>
-                <p>Đề xuất thuốc hoặc phương án an toàn hơn khi có rủi ro.</p>
+                <div class="card-icon">3</div>
+                <h3>Hiển thị kết quả</h3>
+                <p>Người dùng nhận cảnh báo, mức độ nguy hiểm và gợi ý nếu có.</p>
             </div>
         </div>
     </div>
 </section>
 
 <footer class="footer">
-    <p>© 2026 Drug Safe - Đồ án Công nghệ phần mềm</p>
+    <div class="container">
+        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+    </div>
 </footer>
 
 </body>

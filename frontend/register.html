@@ -2,14 +2,16 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng ký</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
     <div class="container header-content">
-        <div class="logo">Drug Safe</div>
+        <div class="logo">Drug<span>Safe</span></div>
+
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
             <a href="check.html">Kiểm tra</a>
@@ -18,41 +20,75 @@
     </div>
 </header>
 
-<div class="container">
-    <div class="form-box">
-        <h2>Đăng ký tài khoản</h2>
+<section class="section">
+    <div class="container">
+        <div class="form-box">
+            <div class="card-icon" style="margin: 0 auto 16px;">👤</div>
+            <h2>Đăng ký tài khoản</h2>
 
-        <div id="registerMessage" class="message"></div>
+            <div id="registerMessage" class="message"></div>
 
-        <form id="registerForm">
-            <div class="form-group">
-                <label>Họ tên</label>
-                <input type="text" id="fullName" class="form-control" placeholder="Nhập họ tên">
-            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullName">Họ tên</label>
+                    <input 
+                        type="text" 
+                        id="fullName" 
+                        class="form-control" 
+                        placeholder="Nhập họ tên"
+                    >
+                </div>
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Nhập email">
-            </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-control" 
+                        placeholder="Nhập email"
+                    >
+                </div>
 
-            <div class="form-group">
-                <label>Mật khẩu</label>
-                <input type="password" id="password" class="form-control" placeholder="Nhập mật khẩu">
-            </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-control" 
+                        placeholder="Tối thiểu 6 ký tự"
+                    >
+                </div>
 
-            <div class="form-group">
-                <label>Xác nhận mật khẩu</label>
-                <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu">
-            </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        class="form-control" 
+                        placeholder="Nhập lại mật khẩu"
+                    >
+                </div>
 
-            <button type="submit" class="btn btn-primary" style="width:100%">Đăng ký</button>
-        </form>
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                    Đăng ký
+                </button>
+            </form>
 
-        <p style="text-align:center; margin-top:16px;">
-            Đã có tài khoản? <a href="login.html" style="color:#0f766e;">Đăng nhập</a>
-        </p>
+            <p style="text-align:center; margin-top:18px; color:#6b7280;">
+                Đã có tài khoản?
+                <a href="login.html" style="color:#0f766e; font-weight:700;">
+                    Đăng nhập
+                </a>
+            </p>
+        </div>
     </div>
-</div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+    </div>
+</footer>
 
 <script src="js/api.js"></script>
 <script src="js/register.js"></script>

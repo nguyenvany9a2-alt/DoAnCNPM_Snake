@@ -2,17 +2,20 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Lịch sử tra cứu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử tra cứu - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
     <div class="container header-content">
-        <div class="logo">Drug Safe</div>
+        <div class="logo">Drug<span>Safe</span></div>
+
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
             <a href="check.html">Kiểm tra</a>
+            <a href="result.html">Kết quả</a>
             <a href="login.html">Đăng nhập</a>
         </nav>
     </div>
@@ -21,27 +24,46 @@
 <section class="section">
     <div class="container">
         <h2 class="section-title">Lịch sử tra cứu</h2>
+        <p class="section-desc">
+            Danh sách các lần kiểm tra thuốc đã thực hiện trên hệ thống.
+        </p>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Thời gian</th>
-                    <th>Loại kiểm tra</th>
-                    <th>Thuốc</th>
-                    <th>Kết quả</th>
-                </tr>
-            </thead>
-            <tbody id="historyTable"></tbody>
-        </table>
+        <div class="result-card">
+            <h3>Thông tin lịch sử</h3>
+            <p>
+                Lịch sử giúp người dùng theo dõi lại các lần kiểm tra chống chỉ định
+                và tương tác thuốc trước đó.
+            </p>
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Loại kiểm tra</th>
+                        <th>Danh sách thuốc</th>
+                        <th>Kết quả</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTable"></tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 24px;">
+            <a href="check.html" class="btn btn-primary">Thực hiện kiểm tra mới</a>
+        </div>
     </div>
 </section>
 
 <footer class="footer">
-    <p>© 2026 Drug Safe - Đồ án Công nghệ phần mềm</p>
+    <div class="container">
+        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+    </div>
 </footer>
 
 <script src="js/api.js"></script>
 <script src="js/history.js"></script>
 
 </body>
-</html>x
+</html>
