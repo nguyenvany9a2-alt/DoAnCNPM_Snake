@@ -3240,3 +3240,124 @@ a {
         flex-direction: column;
     }
 }
+.admin-tabs {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.admin-tab {
+    border: none;
+    background: white;
+    color: var(--primary-dark);
+    font-weight: 900;
+    padding: 12px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 24px rgba(15, 118, 110, 0.08);
+}
+
+.admin-tab.active,
+.admin-tab:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.admin-tab-content {
+    display: none;
+}
+
+.admin-tab-content.active {
+    display: block;
+}
+
+.admin-form-box {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    margin-bottom: 22px;
+}
+
+.admin-product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.admin-product-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 20px;
+    box-shadow: 0 10px 24px rgba(15, 118, 110, 0.08);
+}
+
+.admin-product-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: #ccfbf1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-bottom: 14px;
+}
+
+.admin-product-card h3 {
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+}
+
+.admin-product-card p {
+    color: var(--muted);
+}
+
+.admin-product-card strong {
+    display: block;
+    color: var(--danger);
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.admin-product-card span {
+    color: var(--primary-dark);
+    font-weight: 800;
+}
+
+.admin-system-hero {
+    padding: 78px 0;
+    background:
+        radial-gradient(circle at top right, rgba(45, 212, 191, 0.32), transparent 32%),
+        linear-gradient(135deg, #0f766e, #0891b2);
+    color: white;
+}
+
+.admin-system-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 36px;
+    align-items: center;
+}
+
+.admin-system-grid h1 {
+    font-size: 48px;
+    line-height: 1.12;
+    margin-bottom: 18px;
+}
+
+.admin-system-grid p {
+    color: #ecfeff;
+    font-size: 18px;
+}
+
+@media (max-width: 1000px) {
+    .admin-system-grid,
+    .admin-product-grid {
+        grid-template-columns: 1fr;
+    }
+}

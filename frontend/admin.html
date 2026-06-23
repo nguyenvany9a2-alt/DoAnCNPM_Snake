@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - DrugSafe</title>
+    <title>Admin - Quản lý hệ thống DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="admin-page">
@@ -15,30 +15,30 @@
         <nav class="nav">
             <a href="admin.html">Admin</a>
             <a href="index.html">Trang chủ</a>
-            <a href="check.html">Kiểm tra</a>
             <a href="drugstore.html">DrugStore</a>
+            <a href="check.html">Kiểm tra</a>
             <a href="history.html">Lịch sử</a>
             <a href="#" onclick="logoutAdmin()">Đăng xuất</a>
         </nav>
     </div>
 </header>
 
-<section class="admin-hero">
-    <div class="container admin-hero-grid">
+<section class="admin-system-hero">
+    <div class="container admin-system-grid">
         <div>
-            <span class="premium-label">Admin Project Dashboard</span>
-            <h1>Quản lý toàn bộ dự án DrugSafe</h1>
+            <span class="premium-label">System Administration</span>
+            <h1>Quản trị hệ thống DrugSafe</h1>
             <p>
-                Trang quản trị dành riêng cho Leader/Admin để theo dõi tiến độ,
-                quản lý công việc nhóm, xem lịch sử kiểm tra và đơn hàng DrugStore demo.
+                Trang quản trị dành cho Admin để quản lý thuốc, bệnh nền, người dùng,
+                lịch sử tra cứu, sản phẩm DrugStore và đơn hàng demo.
             </p>
         </div>
 
         <div class="admin-profile-card">
-            <div class="admin-avatar">👨‍💻</div>
+            <div class="admin-avatar">🛡️</div>
             <h3 id="adminName">Quản trị viên</h3>
             <p id="adminEmail">admin@drugsafe.vn</p>
-            <span class="admin-role">Admin duy nhất</span>
+            <span class="admin-role">Admin hệ thống</span>
         </div>
     </div>
 </section>
@@ -48,172 +48,217 @@
 
         <div class="admin-stat-grid">
             <div class="admin-stat-card">
-                <div class="admin-stat-icon">📌</div>
-                <span>Tổng công việc</span>
-                <strong id="totalTasks">0</strong>
+                <div class="admin-stat-icon">💊</div>
+                <span>Tổng thuốc</span>
+                <strong id="drugCount">0</strong>
             </div>
 
             <div class="admin-stat-card">
-                <div class="admin-stat-icon todo">📝</div>
-                <span>To Do</span>
-                <strong id="todoTasks">0</strong>
+                <div class="admin-stat-icon">🩺</div>
+                <span>Bệnh nền</span>
+                <strong id="diseaseCount">0</strong>
             </div>
 
             <div class="admin-stat-card">
-                <div class="admin-stat-icon progress">⚙️</div>
-                <span>In Progress</span>
-                <strong id="progressTasks">0</strong>
+                <div class="admin-stat-icon">👥</div>
+                <span>Người dùng</span>
+                <strong id="userCount">0</strong>
             </div>
 
             <div class="admin-stat-card">
-                <div class="admin-stat-icon done">✅</div>
-                <span>Done</span>
-                <strong id="doneTasks">0</strong>
+                <div class="admin-stat-icon">📋</div>
+                <span>Lịch sử tra cứu</span>
+                <strong id="historyCount">0</strong>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">🛒</div>
+                <span>Sản phẩm</span>
+                <strong id="productCount">0</strong>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">📦</div>
+                <span>Đơn hàng</span>
+                <strong id="orderCount">0</strong>
             </div>
         </div>
 
-        <div class="admin-progress-panel">
-            <div>
-                <h2>Tiến độ dự án</h2>
-                <p>Theo dõi tỷ lệ hoàn thành công việc của nhóm.</p>
-            </div>
-
-            <div class="progress-bar-wrap">
-                <div class="progress-bar">
-                    <div id="projectProgressBar" class="progress-bar-fill"></div>
-                </div>
-                <strong id="projectProgressText">0%</strong>
-            </div>
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showAdminTab('drugs')">Quản lý thuốc</button>
+            <button class="admin-tab" onclick="showAdminTab('diseases')">Quản lý bệnh nền</button>
+            <button class="admin-tab" onclick="showAdminTab('users')">Người dùng</button>
+            <button class="admin-tab" onclick="showAdminTab('products')">DrugStore</button>
+            <button class="admin-tab" onclick="showAdminTab('orders')">Đơn hàng</button>
+            <button class="admin-tab" onclick="showAdminTab('histories')">Lịch sử</button>
         </div>
 
-        <div class="admin-grid">
+        <div id="adminMessage" class="message"></div>
 
+        <!-- QUẢN LÝ THUỐC -->
+        <div id="tab-drugs" class="admin-tab-content active">
             <div class="admin-panel">
                 <div class="admin-panel-heading">
                     <div>
-                        <h2>Quản lý công việc dự án</h2>
-                        <p>Cập nhật trạng thái công việc của từng sinh viên.</p>
+                        <h2>Quản lý thuốc</h2>
+                        <p>Thêm, xem và xóa thuốc trong hệ thống.</p>
                     </div>
-
-                    <button class="btn btn-primary" onclick="resetProjectTasks()">
-                        Reset dữ liệu
-                    </button>
+                    <button class="btn btn-primary" onclick="openDrugForm()">Thêm thuốc</button>
                 </div>
 
-                <div id="adminMessage" class="message"></div>
+                <div id="drugForm" class="admin-form-box" style="display:none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tên thuốc</label>
+                            <input type="text" id="drugName" class="form-control" placeholder="Ví dụ: Aspirin">
+                        </div>
 
-                <div class="admin-toolbar">
-                    <input 
-                        type="text" 
-                        id="taskSearch" 
-                        class="form-control" 
-                        placeholder="Tìm công việc, epic hoặc sinh viên..."
-                    >
+                        <div class="form-group">
+                            <label>Hoạt chất</label>
+                            <input type="text" id="activeIngredient" class="form-control" placeholder="Ví dụ: Acetylsalicylic Acid">
+                        </div>
+                    </div>
 
-                    <select id="memberFilter" class="form-control">
-                        <option value="all">Tất cả sinh viên</option>
-                        <option value="SV1">SV1 - Leader</option>
-                        <option value="SV2">SV2 - Frontend</option>
-                        <option value="SV3">SV3 - User/History</option>
-                        <option value="SV4">SV4 - Recommendation</option>
-                        <option value="SV5">SV5 - Testing/Deploy</option>
-                    </select>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nhà sản xuất</label>
+                            <input type="text" id="manufacturer" class="form-control" placeholder="Ví dụ: Bayer">
+                        </div>
 
-                    <select id="statusFilter" class="form-control">
-                        <option value="all">Tất cả trạng thái</option>
-                        <option value="To Do">To Do</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Done">Done</option>
-                    </select>
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <input type="text" id="drugDescription" class="form-control" placeholder="Mô tả thuốc">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="createDrug()">Lưu thuốc</button>
+                    <button class="btn btn-light" onclick="closeDrugForm()">Hủy</button>
                 </div>
 
                 <div class="admin-table-wrapper">
                     <table class="table admin-table">
                         <thead>
                             <tr>
-                                <th>Mã</th>
-                                <th>Công việc</th>
-                                <th>Epic</th>
-                                <th>Người làm</th>
-                                <th>Ưu tiên</th>
-                                <th>Trạng thái</th>
+                                <th>ID</th>
+                                <th>Tên thuốc</th>
+                                <th>Hoạt chất</th>
+                                <th>Nhà sản xuất</th>
+                                <th>Mô tả</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
-                        <tbody id="taskTable"></tbody>
+                        <tbody id="drugTable"></tbody>
                     </table>
                 </div>
             </div>
-
-            <aside class="admin-side">
-
-                <div class="admin-panel small-panel">
-                    <h2>Phân công nhóm</h2>
-
-                    <div class="member-card">
-                        <strong>SV1 - Leader</strong>
-                        <span>Backend API, Database, Drug, Disease, Check</span>
-                    </div>
-
-                    <div class="member-card">
-                        <strong>SV2 - Frontend UI</strong>
-                        <span>Home, Check, DrugStore, Cart, Login/Register</span>
-                    </div>
-
-                    <div class="member-card">
-                        <strong>SV3 - User & History</strong>
-                        <span>Tài khoản, đăng nhập, lịch sử tra cứu</span>
-                    </div>
-
-                    <div class="member-card">
-                        <strong>SV4 - Recommendation</strong>
-                        <span>Gợi ý thuốc thay thế, đề xuất an toàn</span>
-                    </div>
-
-                    <div class="member-card">
-                        <strong>SV5 - Testing & Deployment</strong>
-                        <span>Test case, unit test, hướng dẫn cài đặt, deploy</span>
-                    </div>
-                </div>
-
-                <div class="admin-panel small-panel">
-                    <h2>Dữ liệu hệ thống</h2>
-
-                    <div class="system-data-row">
-                        <span>Lịch sử tra cứu</span>
-                        <strong id="historyCount">0</strong>
-                    </div>
-
-                    <div class="system-data-row">
-                        <span>Đơn hàng DrugStore</span>
-                        <strong id="orderCount">0</strong>
-                    </div>
-
-                    <div class="system-data-row">
-                        <span>Sản phẩm trong giỏ</span>
-                        <strong id="cartCount">0</strong>
-                    </div>
-                </div>
-
-            </aside>
-
         </div>
 
-        <div class="admin-grid-two">
-
+        <!-- QUẢN LÝ BỆNH NỀN -->
+        <div id="tab-diseases" class="admin-tab-content">
             <div class="admin-panel">
-                <h2>Lịch sử kiểm tra gần đây</h2>
-                <p class="admin-muted">Dữ liệu lấy từ localStorage của trang kiểm tra thuốc.</p>
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Quản lý bệnh nền</h2>
+                        <p>Quản lý danh mục bệnh nền phục vụ kiểm tra chống chỉ định.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openDiseaseForm()">Thêm bệnh nền</button>
+                </div>
 
-                <div id="recentHistoryList" class="admin-list"></div>
+                <div id="diseaseForm" class="admin-form-box" style="display:none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tên bệnh nền</label>
+                            <input type="text" id="diseaseName" class="form-control" placeholder="Ví dụ: Viêm loét dạ dày">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <input type="text" id="diseaseDescription" class="form-control" placeholder="Mô tả bệnh nền">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="createDisease()">Lưu bệnh nền</button>
+                    <button class="btn btn-light" onclick="closeDiseaseForm()">Hủy</button>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="table admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên bệnh nền</th>
+                                <th>Mô tả</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="diseaseTable"></tbody>
+                    </table>
+                </div>
             </div>
+        </div>
 
+        <!-- NGƯỜI DÙNG -->
+        <div id="tab-users" class="admin-tab-content">
             <div class="admin-panel">
-                <h2>Đơn hàng DrugStore gần đây</h2>
-                <p class="admin-muted">Dữ liệu đơn hàng demo sau khi người dùng thanh toán.</p>
+                <h2>Quản lý người dùng</h2>
+                <p class="admin-muted">Danh sách tài khoản đã đăng ký trong hệ thống.</p>
 
-                <div id="recentOrderList" class="admin-list"></div>
+                <div class="admin-table-wrapper">
+                    <table class="table admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable"></tbody>
+                    </table>
+                </div>
             </div>
+        </div>
 
+        <!-- DRUGSTORE -->
+        <div id="tab-products" class="admin-tab-content">
+            <div class="admin-panel">
+                <h2>Quản lý sản phẩm DrugStore</h2>
+                <p class="admin-muted">
+                    Danh sách sản phẩm demo lấy từ file store-data.js.
+                </p>
+
+                <div id="productAdminGrid" class="admin-product-grid"></div>
+            </div>
+        </div>
+
+        <!-- ĐƠN HÀNG -->
+        <div id="tab-orders" class="admin-tab-content">
+            <div class="admin-panel">
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Quản lý đơn hàng</h2>
+                        <p>Danh sách đơn hàng demo sau khi người dùng thanh toán.</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="clearOrders()">Xóa đơn hàng demo</button>
+                </div>
+
+                <div id="orderList" class="admin-list"></div>
+            </div>
+        </div>
+
+        <!-- LỊCH SỬ -->
+        <div id="tab-histories" class="admin-tab-content">
+            <div class="admin-panel">
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Quản lý lịch sử tra cứu</h2>
+                        <p>Lịch sử kiểm tra chống chỉ định và tương tác thuốc.</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="clearHistories()">Xóa lịch sử demo</button>
+                </div>
+
+                <div id="historyAdminList" class="admin-list"></div>
+            </div>
         </div>
 
     </div>
@@ -221,7 +266,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p>© 2026 DrugSafe - Admin Dashboard</p>
+        <p>© 2026 DrugSafe - Admin quản lý hệ thống</p>
     </div>
 </footer>
 

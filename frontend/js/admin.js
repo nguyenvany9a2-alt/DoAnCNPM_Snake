@@ -1,171 +1,13 @@
 const ADMIN_EMAIL = "admin@drugsafe.vn";
 
-const defaultTasks = [
-    {
-        id: "CS-139",
-        title: "Thiết kế cơ sở dữ liệu",
-        epic: "Backend API & Database",
-        assignee: "SV1",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-138",
-        title: "Xây dựng REST API",
-        epic: "Backend API & Database",
-        assignee: "SV1",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-120",
-        title: "CRUD thuốc",
-        epic: "Drug Management",
-        assignee: "SV1",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-122",
-        title: "CRUD bệnh nền",
-        epic: "Disease Management",
-        assignee: "SV1",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-124",
-        title: "API kiểm tra chống chỉ định",
-        epic: "Contraindication Check",
-        assignee: "SV1",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-126",
-        title: "API kiểm tra tương tác thuốc",
-        epic: "Drug Interaction Check",
-        assignee: "SV1",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-91",
-        title: "Trang chủ hệ thống",
-        epic: "Frontend UI",
-        assignee: "SV2",
-        priority: "Medium",
-        status: "Done"
-    },
-    {
-        id: "CS-92",
-        title: "Trang nhập đơn thuốc",
-        epic: "Frontend UI",
-        assignee: "SV2",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-93",
-        title: "Thiết kế giao diện Home",
-        epic: "Frontend UI",
-        assignee: "SV2",
-        priority: "Medium",
-        status: "Done"
-    },
-    {
-        id: "CS-94",
-        title: "Responsive Home",
-        epic: "Frontend UI",
-        assignee: "SV2",
-        priority: "Medium",
-        status: "In Progress"
-    },
-    {
-        id: "CS-95",
-        title: "Thiết kế form nhập thuốc",
-        epic: "Frontend UI",
-        assignee: "SV2",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-96",
-        title: "Validate dữ liệu nhập",
-        epic: "Frontend UI",
-        assignee: "SV2",
-        priority: "High",
-        status: "In Progress"
-    },
-    {
-        id: "CS-101",
-        title: "API đăng ký",
-        epic: "User Account",
-        assignee: "SV3",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-102",
-        title: "API đăng nhập",
-        epic: "User Account",
-        assignee: "SV3",
-        priority: "High",
-        status: "Done"
-    },
-    {
-        id: "CS-130",
-        title: "Lưu lịch sử tra cứu",
-        epic: "History Management",
-        assignee: "SV3",
-        priority: "Medium",
-        status: "Done"
-    },
-    {
-        id: "CS-128",
-        title: "API gợi ý thuốc thay thế",
-        epic: "Recommendation System",
-        assignee: "SV4",
-        priority: "Medium",
-        status: "To Do"
-    },
-    {
-        id: "CS-129",
-        title: "Thuật toán đề xuất thuốc",
-        epic: "Recommendation System",
-        assignee: "SV4",
-        priority: "Medium",
-        status: "To Do"
-    },
-    {
-        id: "CS-140",
-        title: "Viết Test Case",
-        epic: "Testing & Deployment",
-        assignee: "SV5",
-        priority: "Medium",
-        status: "In Progress"
-    },
-    {
-        id: "CS-141",
-        title: "Deploy Server",
-        epic: "Testing & Deployment",
-        assignee: "SV5",
-        priority: "Medium",
-        status: "To Do"
-    }
-];
-
-let projectTasks = [];
+let drugs = [];
+let diseases = [];
+let users = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     protectAdminPage();
     loadAdminProfile();
-    loadTasks();
-    renderDashboard();
-
-    document.getElementById("taskSearch").addEventListener("input", filterTasks);
-    document.getElementById("memberFilter").addEventListener("change", filterTasks);
-    document.getElementById("statusFilter").addEventListener("change", filterTasks);
+    loadAllAdminData();
 });
 
 function protectAdminPage() {
@@ -186,167 +28,336 @@ function loadAdminProfile() {
     document.getElementById("adminEmail").textContent = user.email || user.Email || ADMIN_EMAIL;
 }
 
-function loadTasks() {
-    const savedTasks = localStorage.getItem("projectTasks");
+async function loadAllAdminData() {
+    await loadDrugsAdmin();
+    await loadDiseasesAdmin();
+    await loadUsersAdmin();
 
-    if (savedTasks) {
-        projectTasks = JSON.parse(savedTasks);
-    } else {
-        projectTasks = defaultTasks;
-        saveTasks();
+    renderProductsAdmin();
+    renderOrdersAdmin();
+    renderHistoriesAdmin();
+    updateAdminStats();
+}
+
+function showAdminTab(tabName) {
+    document.querySelectorAll(".admin-tab").forEach(tab => tab.classList.remove("active"));
+    document.querySelectorAll(".admin-tab-content").forEach(content => content.classList.remove("active"));
+
+    event.target.classList.add("active");
+    document.getElementById(`tab-${tabName}`).classList.add("active");
+}
+
+/* =========================
+   DRUG MANAGEMENT
+========================= */
+
+async function loadDrugsAdmin() {
+    try {
+        drugs = await apiRequest("/Drug");
+    } catch {
+        drugs = [];
+        showMessage("adminMessage", "Không tải được danh sách thuốc. Kiểm tra backend API.");
     }
+
+    renderDrugsAdmin();
 }
 
-function saveTasks() {
-    localStorage.setItem("projectTasks", JSON.stringify(projectTasks));
-}
+function renderDrugsAdmin() {
+    const table = document.getElementById("drugTable");
 
-function renderDashboard() {
-    updateStats();
-    renderTasks(projectTasks);
-    renderSystemData();
-    renderRecentHistory();
-    renderRecentOrders();
-}
-
-function updateStats() {
-    const total = projectTasks.length;
-    const todo = projectTasks.filter(task => task.status === "To Do").length;
-    const progress = projectTasks.filter(task => task.status === "In Progress").length;
-    const done = projectTasks.filter(task => task.status === "Done").length;
-
-    const percent = total === 0 ? 0 : Math.round((done / total) * 100);
-
-    document.getElementById("totalTasks").textContent = total;
-    document.getElementById("todoTasks").textContent = todo;
-    document.getElementById("progressTasks").textContent = progress;
-    document.getElementById("doneTasks").textContent = done;
-
-    document.getElementById("projectProgressBar").style.width = percent + "%";
-    document.getElementById("projectProgressText").textContent = percent + "%";
-}
-
-function renderTasks(tasks) {
-    const taskTable = document.getElementById("taskTable");
-
-    if (tasks.length === 0) {
-        taskTable.innerHTML = `
+    if (drugs.length === 0) {
+        table.innerHTML = `
             <tr>
-                <td colspan="6">
-                    <div class="admin-empty">
-                        <h3>Không tìm thấy công việc</h3>
-                        <p>Vui lòng thử từ khóa hoặc bộ lọc khác.</p>
-                    </div>
-                </td>
+                <td colspan="6">Chưa có dữ liệu thuốc.</td>
             </tr>
         `;
         return;
     }
 
-    taskTable.innerHTML = tasks.map(task => `
+    table.innerHTML = drugs.map(drug => `
         <tr>
-            <td><strong>${task.id}</strong></td>
-            <td>${task.title}</td>
-            <td>${task.epic}</td>
+            <td>${drug.drugId}</td>
+            <td><strong>${drug.drugName}</strong></td>
+            <td>${drug.activeIngredient || ""}</td>
+            <td>${drug.manufacturer || ""}</td>
+            <td>${drug.description || ""}</td>
             <td>
-                <span class="assignee-chip">${task.assignee}</span>
-            </td>
-            <td>
-                <span class="priority-chip ${getPriorityClass(task.priority)}">${task.priority}</span>
-            </td>
-            <td>
-                <select class="status-select ${getStatusClass(task.status)}" onchange="updateTaskStatus('${task.id}', this.value)">
-                    <option value="To Do" ${task.status === "To Do" ? "selected" : ""}>To Do</option>
-                    <option value="In Progress" ${task.status === "In Progress" ? "selected" : ""}>In Progress</option>
-                    <option value="Done" ${task.status === "Done" ? "selected" : ""}>Done</option>
-                </select>
+                <button class="btn btn-danger" onclick="deleteDrug(${drug.drugId})">Xóa</button>
             </td>
         </tr>
     `).join("");
 }
 
-function filterTasks() {
-    const keyword = document.getElementById("taskSearch").value.toLowerCase().trim();
-    const member = document.getElementById("memberFilter").value;
-    const status = document.getElementById("statusFilter").value;
-
-    const filtered = projectTasks.filter(task => {
-        const matchKeyword =
-            task.id.toLowerCase().includes(keyword) ||
-            task.title.toLowerCase().includes(keyword) ||
-            task.epic.toLowerCase().includes(keyword) ||
-            task.assignee.toLowerCase().includes(keyword);
-
-        const matchMember = member === "all" || task.assignee === member;
-        const matchStatus = status === "all" || task.status === status;
-
-        return matchKeyword && matchMember && matchStatus;
-    });
-
-    renderTasks(filtered);
+function openDrugForm() {
+    document.getElementById("drugForm").style.display = "block";
 }
 
-function updateTaskStatus(taskId, newStatus) {
-    const task = projectTasks.find(item => item.id === taskId);
-
-    if (!task) return;
-
-    task.status = newStatus;
-    saveTasks();
-    updateStats();
-
-    showMessage("adminMessage", `Đã cập nhật ${taskId} thành ${newStatus}.`, "success");
-
-    filterTasks();
+function closeDrugForm() {
+    document.getElementById("drugForm").style.display = "none";
 }
 
-function resetProjectTasks() {
-    if (!confirm("Bạn có chắc muốn reset danh sách công việc về mặc định không?")) {
+async function createDrug() {
+    const drugName = document.getElementById("drugName").value.trim();
+    const activeIngredient = document.getElementById("activeIngredient").value.trim();
+    const manufacturer = document.getElementById("manufacturer").value.trim();
+    const description = document.getElementById("drugDescription").value.trim();
+
+    if (!drugName) {
+        showMessage("adminMessage", "Vui lòng nhập tên thuốc.");
         return;
     }
 
-    projectTasks = defaultTasks;
-    saveTasks();
-    renderDashboard();
+    try {
+        await apiRequest("/Drug", "POST", {
+            drugName,
+            activeIngredient,
+            manufacturer,
+            description
+        });
 
-    showMessage("adminMessage", "Đã reset dữ liệu công việc về mặc định.", "success");
+        showMessage("adminMessage", "Thêm thuốc thành công.", "success");
+
+        document.getElementById("drugName").value = "";
+        document.getElementById("activeIngredient").value = "";
+        document.getElementById("manufacturer").value = "";
+        document.getElementById("drugDescription").value = "";
+
+        closeDrugForm();
+        await loadDrugsAdmin();
+        updateAdminStats();
+
+    } catch (error) {
+        showMessage("adminMessage", "Thêm thuốc thất bại. " + error.message);
+    }
 }
 
-function renderSystemData() {
-    const historyItems = JSON.parse(localStorage.getItem("historyItems") || "[]");
-    const orders = JSON.parse(localStorage.getItem("drugstoreOrders") || "[]");
-    const cart = JSON.parse(localStorage.getItem("drugstoreCart") || "[]");
+async function deleteDrug(id) {
+    if (!confirm("Bạn có chắc muốn xóa thuốc này không?")) return;
 
-    const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    try {
+        await apiRequest(`/Drug/${id}`, "DELETE");
 
-    document.getElementById("historyCount").textContent = historyItems.length;
-    document.getElementById("orderCount").textContent = orders.length;
-    document.getElementById("cartCount").textContent = cartCount;
+        showMessage("adminMessage", "Xóa thuốc thành công.", "success");
+
+        await loadDrugsAdmin();
+        updateAdminStats();
+
+    } catch (error) {
+        showMessage("adminMessage", "Xóa thuốc thất bại. " + error.message);
+    }
 }
 
-function renderRecentHistory() {
-    const list = document.getElementById("recentHistoryList");
-    const historyItems = JSON.parse(localStorage.getItem("historyItems") || "[]");
+/* =========================
+   DISEASE MANAGEMENT
+========================= */
 
-    if (historyItems.length === 0) {
-        list.innerHTML = `
-            <div class="admin-empty">
-                <p>Chưa có lịch sử kiểm tra.</p>
-            </div>
+async function loadDiseasesAdmin() {
+    try {
+        diseases = await apiRequest("/Disease");
+    } catch {
+        diseases = [];
+        showMessage("adminMessage", "Không tải được danh sách bệnh nền.");
+    }
+
+    renderDiseasesAdmin();
+}
+
+function renderDiseasesAdmin() {
+    const table = document.getElementById("diseaseTable");
+
+    if (diseases.length === 0) {
+        table.innerHTML = `
+            <tr>
+                <td colspan="4">Chưa có dữ liệu bệnh nền.</td>
+            </tr>
         `;
         return;
     }
 
-    list.innerHTML = historyItems.slice(0, 5).map(item => {
+    table.innerHTML = diseases.map(disease => `
+        <tr>
+            <td>${disease.id}</td>
+            <td><strong>${disease.diseaseName}</strong></td>
+            <td>${disease.description || ""}</td>
+            <td>
+                <button class="btn btn-danger" onclick="deleteDisease(${disease.id})">Xóa</button>
+            </td>
+        </tr>
+    `).join("");
+}
+
+function openDiseaseForm() {
+    document.getElementById("diseaseForm").style.display = "block";
+}
+
+function closeDiseaseForm() {
+    document.getElementById("diseaseForm").style.display = "none";
+}
+
+async function createDisease() {
+    const diseaseName = document.getElementById("diseaseName").value.trim();
+    const description = document.getElementById("diseaseDescription").value.trim();
+
+    if (!diseaseName) {
+        showMessage("adminMessage", "Vui lòng nhập tên bệnh nền.");
+        return;
+    }
+
+    try {
+        await apiRequest("/Disease", "POST", {
+            diseaseName,
+            description
+        });
+
+        showMessage("adminMessage", "Thêm bệnh nền thành công.", "success");
+
+        document.getElementById("diseaseName").value = "";
+        document.getElementById("diseaseDescription").value = "";
+
+        closeDiseaseForm();
+        await loadDiseasesAdmin();
+        updateAdminStats();
+
+    } catch (error) {
+        showMessage("adminMessage", "Thêm bệnh nền thất bại. " + error.message);
+    }
+}
+
+async function deleteDisease(id) {
+    if (!confirm("Bạn có chắc muốn xóa bệnh nền này không?")) return;
+
+    try {
+        await apiRequest(`/Disease/${id}`, "DELETE");
+
+        showMessage("adminMessage", "Xóa bệnh nền thành công.", "success");
+
+        await loadDiseasesAdmin();
+        updateAdminStats();
+
+    } catch (error) {
+        showMessage("adminMessage", "Xóa bệnh nền thất bại. " + error.message);
+    }
+}
+
+/* =========================
+   USERS
+========================= */
+
+async function loadUsersAdmin() {
+    try {
+        users = await apiRequest("/Auth");
+    } catch {
+        users = [];
+    }
+
+    renderUsersAdmin();
+}
+
+function renderUsersAdmin() {
+    const table = document.getElementById("userTable");
+
+    if (users.length === 0) {
+        table.innerHTML = `
+            <tr>
+                <td colspan="4">Chưa có dữ liệu người dùng.</td>
+            </tr>
+        `;
+        return;
+    }
+
+    table.innerHTML = users.map(user => `
+        <tr>
+            <td>${user.id}</td>
+            <td>${user.fullName || user.FullName || ""}</td>
+            <td>${user.email || user.Email || ""}</td>
+            <td>
+                <span class="assignee-chip">${user.role || user.Role || "User"}</span>
+            </td>
+        </tr>
+    `).join("");
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+function renderProductsAdmin() {
+    const grid = document.getElementById("productAdminGrid");
+
+    if (!window.PRODUCTS && typeof PRODUCTS === "undefined") {
+        grid.innerHTML = `<p>Không tìm thấy dữ liệu sản phẩm DrugStore.</p>`;
+        return;
+    }
+
+    grid.innerHTML = PRODUCTS.map(product => `
+        <div class="admin-product-card">
+            <div class="admin-product-icon">${product.image}</div>
+            <h3>${product.name}</h3>
+            <p>${product.category}</p>
+            <strong>${formatCurrency(product.price)}</strong>
+            <span>${product.activeIngredient}</span>
+        </div>
+    `).join("");
+}
+
+/* =========================
+   ORDERS
+========================= */
+
+function renderOrdersAdmin() {
+    const orderList = document.getElementById("orderList");
+    const orders = JSON.parse(localStorage.getItem("drugstoreOrders") || "[]");
+
+    if (orders.length === 0) {
+        orderList.innerHTML = `<div class="admin-empty">Chưa có đơn hàng demo.</div>`;
+        return;
+    }
+
+    orderList.innerHTML = orders.map(order => `
+        <div class="admin-list-item">
+            <div>
+                <strong>${order.orderCode}</strong>
+                <p>${order.customer?.name || "Khách hàng demo"} - ${order.customer?.phone || ""}</p>
+                <span>${order.createdAt}</span>
+            </div>
+            <strong>${formatCurrency(order.total || 0)}</strong>
+        </div>
+    `).join("");
+}
+
+function clearOrders() {
+    if (!confirm("Bạn có chắc muốn xóa toàn bộ đơn hàng demo không?")) return;
+
+    localStorage.removeItem("drugstoreOrders");
+    renderOrdersAdmin();
+    updateAdminStats();
+
+    showMessage("adminMessage", "Đã xóa toàn bộ đơn hàng demo.", "success");
+}
+
+/* =========================
+   HISTORIES
+========================= */
+
+function renderHistoriesAdmin() {
+    const historyList = document.getElementById("historyAdminList");
+    const histories = JSON.parse(localStorage.getItem("historyItems") || "[]");
+
+    if (histories.length === 0) {
+        historyList.innerHTML = `<div class="admin-empty">Chưa có lịch sử tra cứu.</div>`;
+        return;
+    }
+
+    historyList.innerHTML = histories.map(item => {
         const drugs = item.input?.drugNames?.join(", ") || "Không có dữ liệu";
+        const disease = item.input?.diseaseNames?.join(", ") || "Không áp dụng";
         const level = item.result?.level || "Low";
-        const type = getTypeText(item.type);
 
         return `
             <div class="admin-list-item">
                 <div>
-                    <strong>${type}</strong>
-                    <p>${drugs}</p>
+                    <strong>${drugs}</strong>
+                    <p>Bệnh nền: ${disease}</p>
                     <span>${item.createdAt}</span>
                 </div>
                 <span class="history-risk-chip ${getRiskClass(level)}">${level}</span>
@@ -355,55 +366,38 @@ function renderRecentHistory() {
     }).join("");
 }
 
-function renderRecentOrders() {
-    const list = document.getElementById("recentOrderList");
+function clearHistories() {
+    if (!confirm("Bạn có chắc muốn xóa toàn bộ lịch sử tra cứu không?")) return;
+
+    localStorage.removeItem("historyItems");
+    renderHistoriesAdmin();
+    updateAdminStats();
+
+    showMessage("adminMessage", "Đã xóa toàn bộ lịch sử tra cứu.", "success");
+}
+
+/* =========================
+   STATS + LOGOUT
+========================= */
+
+function updateAdminStats() {
+    const histories = JSON.parse(localStorage.getItem("historyItems") || "[]");
     const orders = JSON.parse(localStorage.getItem("drugstoreOrders") || "[]");
 
-    if (orders.length === 0) {
-        list.innerHTML = `
-            <div class="admin-empty">
-                <p>Chưa có đơn hàng DrugStore.</p>
-            </div>
-        `;
-        return;
-    }
+    const productCount = typeof PRODUCTS !== "undefined" ? PRODUCTS.length : 0;
 
-    list.innerHTML = orders.slice(0, 5).map(order => `
-        <div class="admin-list-item">
-            <div>
-                <strong>${order.orderCode}</strong>
-                <p>${order.customer?.name || "Khách hàng demo"}</p>
-                <span>${order.createdAt}</span>
-            </div>
-            <strong>${formatCurrency(order.total || 0)}</strong>
-        </div>
-    `).join("");
+    document.getElementById("drugCount").textContent = drugs.length;
+    document.getElementById("diseaseCount").textContent = diseases.length;
+    document.getElementById("userCount").textContent = users.length;
+    document.getElementById("historyCount").textContent = histories.length;
+    document.getElementById("productCount").textContent = productCount;
+    document.getElementById("orderCount").textContent = orders.length;
 }
 
 function logoutAdmin() {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-
     window.location.href = "login.html";
-}
-
-function getTypeText(type) {
-    if (type === "contraindication") return "Chống chỉ định";
-    if (type === "interaction") return "Tương tác thuốc";
-    if (type === "comprehensive") return "Toàn diện";
-    return "Khác";
-}
-
-function getStatusClass(status) {
-    if (status === "Done") return "status-done";
-    if (status === "In Progress") return "status-progress";
-    return "status-todo";
-}
-
-function getPriorityClass(priority) {
-    if (priority === "High") return "priority-high";
-    if (priority === "Medium") return "priority-medium";
-    return "priority-low";
 }
 
 function getRiskClass(level) {
