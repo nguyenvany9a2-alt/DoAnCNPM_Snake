@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ hàng - DrugSafe</title>
+    <title>Giỏ hàng & Thanh toán - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,18 +22,75 @@
     </div>
 </header>
 
+<section class="checkout-hero">
+    <div class="container checkout-hero-grid">
+        <div>
+            <span class="premium-label">Secure Checkout</span>
+            <h1>Giỏ hàng & Thanh toán DrugStore</h1>
+            <p>
+                Kiểm tra sản phẩm, nhập thông tin nhận hàng và xác nhận phương thức thanh toán.
+                Chức năng phục vụ demo UI/UX cho hệ thống DrugSafe.
+            </p>
+        </div>
+
+        <div class="checkout-trust-card">
+            <div class="trust-icon">🛡️</div>
+            <div>
+                <h3>Thanh toán an toàn</h3>
+                <p>Thông tin đơn hàng được xử lý cục bộ trong bản demo.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="section">
     <div class="container">
-        <h2 class="section-title">Giỏ hàng DrugStore</h2>
-        <p class="section-desc">
-            Danh sách sản phẩm đã chọn trong DrugStore. Đây là chức năng mô phỏng phục vụ demo đồ án.
-        </p>
 
-        <div class="cart-layout">
-            <div id="cartItems" class="cart-items"></div>
+        <div class="checkout-steps">
+            <div class="checkout-step active">
+                <span>1</span>
+                <p>Giỏ hàng</p>
+            </div>
+            <div class="checkout-line"></div>
+            <div class="checkout-step active">
+                <span>2</span>
+                <p>Thông tin nhận hàng</p>
+            </div>
+            <div class="checkout-line"></div>
+            <div class="checkout-step active">
+                <span>3</span>
+                <p>Thanh toán</p>
+            </div>
+        </div>
 
-            <div class="cart-summary">
-                <h3>Tóm tắt giỏ hàng</h3>
+        <div id="cartMessage" class="message"></div>
+
+        <div class="cart-layout premium-cart-layout">
+
+            <div class="cart-left-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Sản phẩm đã chọn</h2>
+                        <p>Kiểm tra lại số lượng và thông tin trước khi thanh toán.</p>
+                    </div>
+                    <a href="drugstore.html" class="btn btn-light">Tiếp tục mua</a>
+                </div>
+
+                <div id="cartItems" class="cart-items"></div>
+
+                <div class="cart-medical-note">
+                    <div class="note-icon">⚠️</div>
+                    <div>
+                        <strong>Lưu ý y tế</strong>
+                        <p>
+                            DrugStore trong đồ án chỉ là chức năng mô phỏng. Người dùng cần tham khảo ý kiến bác sĩ/dược sĩ trước khi sử dụng thuốc.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="cart-summary premium-summary">
+                <h3>Tóm tắt đơn hàng</h3>
 
                 <div class="summary-row">
                     <span>Số lượng sản phẩm</span>
@@ -41,39 +98,159 @@
                 </div>
 
                 <div class="summary-row">
-                    <span>Tổng tiền</span>
+                    <span>Tạm tính</span>
+                    <strong id="subtotalPrice">0đ</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Phí vận chuyển</span>
+                    <strong id="shippingFee">0đ</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Giảm giá</span>
+                    <strong id="discountPrice">0đ</strong>
+                </div>
+
+                <div class="voucher-box">
+                    <input type="text" id="voucherInput" class="form-control" placeholder="Nhập mã giảm giá: DRUGSAFE">
+                    <button class="btn btn-primary" onclick="applyVoucher()">Áp dụng</button>
+                </div>
+
+                <div class="summary-total">
+                    <span>Tổng thanh toán</span>
                     <strong id="totalPrice">0đ</strong>
                 </div>
 
-                <button class="btn btn-primary" style="width:100%; margin-top:18px;" onclick="mockCheckout()">
-                    Xác nhận giỏ hàng
-                </button>
+                <div class="payment-security">
+                    <span>🔒</span>
+                    <p>Đơn hàng demo được lưu an toàn trong trình duyệt.</p>
+                </div>
+            </aside>
+        </div>
 
-                <a href="drugstore.html" class="btn btn-light" style="width:100%; margin-top:12px;">
-                    Tiếp tục xem sản phẩm
-                </a>
+        <div class="checkout-form-layout">
 
-                <div class="guide-box">
-                    <strong>Lưu ý:</strong>
-                    <ul>
-                        <li>Giỏ hàng chỉ là chức năng mô phỏng.</li>
-                        <li>Không thực hiện mua bán thuốc thật.</li>
-                        <li>Người dùng cần tham khảo ý kiến chuyên môn trước khi sử dụng thuốc.</li>
-                    </ul>
+            <div class="checkout-form-card">
+                <h2>Thông tin nhận hàng</h2>
+                <p>Vui lòng nhập đầy đủ thông tin để tạo đơn hàng.</p>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="customerName">Họ tên người nhận</label>
+                        <input type="text" id="customerName" class="form-control" placeholder="Nguyễn Văn A">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">Số điện thoại</label>
+                        <input type="text" id="customerPhone" class="form-control" placeholder="0901234567">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" class="form-control" placeholder="email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="customerAddress">Địa chỉ nhận hàng</label>
+                    <textarea id="customerAddress" class="form-control" rows="3" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="orderNote">Ghi chú đơn hàng</label>
+                    <textarea id="orderNote" class="form-control" rows="2" placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao..."></textarea>
                 </div>
             </div>
+
+            <div class="checkout-form-card">
+                <h2>Phương thức thanh toán</h2>
+                <p>Chọn phương thức thanh toán phù hợp.</p>
+
+                <div class="payment-methods">
+
+                    <label class="payment-method active">
+                        <input type="radio" name="paymentMethod" value="COD" checked>
+                        <div class="payment-icon">💵</div>
+                        <div>
+                            <strong>Thanh toán khi nhận hàng</strong>
+                            <span>COD - phù hợp cho demo đồ án</span>
+                        </div>
+                    </label>
+
+                    <label class="payment-method">
+                        <input type="radio" name="paymentMethod" value="BANK_TRANSFER">
+                        <div class="payment-icon">🏦</div>
+                        <div>
+                            <strong>Chuyển khoản ngân hàng</strong>
+                            <span>Hiển thị thông tin chuyển khoản sau khi đặt hàng</span>
+                        </div>
+                    </label>
+
+                    <label class="payment-method">
+                        <input type="radio" name="paymentMethod" value="E_WALLET">
+                        <div class="payment-icon">📱</div>
+                        <div>
+                            <strong>Ví điện tử demo</strong>
+                            <span>Mô phỏng thanh toán online</span>
+                        </div>
+                    </label>
+
+                </div>
+
+                <div id="bankInfo" class="bank-info" style="display:none;">
+                    <h3>Thông tin chuyển khoản demo</h3>
+                    <p><strong>Ngân hàng:</strong> Vietcombank</p>
+                    <p><strong>Số tài khoản:</strong> 0123456789</p>
+                    <p><strong>Chủ tài khoản:</strong> DRUGSAFE DEMO</p>
+                    <p><strong>Nội dung:</strong> DRUGSAFE + Số điện thoại</p>
+                </div>
+
+                <label class="policy-check">
+                    <input type="checkbox" id="policyAgree">
+                    <span>
+                        Tôi xác nhận đây là chức năng demo, không thay thế tư vấn y tế và không thực hiện mua bán thuốc thật.
+                    </span>
+                </label>
+
+                <button class="btn btn-primary checkout-button" onclick="placeOrder()">
+                    Xác nhận thanh toán
+                </button>
+            </div>
+
         </div>
     </div>
 </section>
+
+<div id="orderModal" class="modal-overlay">
+    <div class="order-modal">
+        <div class="success-icon">✅</div>
+        <h2>Đặt hàng thành công</h2>
+        <p id="orderSuccessText">
+            Đơn hàng của bạn đã được ghi nhận.
+        </p>
+
+        <div class="order-code-box">
+            <span>Mã đơn hàng</span>
+            <strong id="orderCode">DS000000</strong>
+        </div>
+
+        <div class="modal-actions">
+            <a href="drugstore.html" class="btn btn-light">Tiếp tục mua</a>
+            <button class="btn btn-primary" onclick="closeOrderModal()">Đóng</button>
+        </div>
+    </div>
+</div>
 
 <div id="toast" class="toast">Cập nhật giỏ hàng</div>
 
 <footer class="footer">
     <div class="container">
-        <p>© 2026 DrugSafe - Giỏ hàng Demo</p>
+        <p>© 2026 DrugSafe - Giỏ hàng & Thanh toán Demo</p>
     </div>
 </footer>
 
+<script src="js/api.js"></script>
 <script src="js/store-data.js"></script>
 <script src="js/cart.js"></script>
 
