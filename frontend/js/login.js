@@ -78,9 +78,16 @@ async function handleLogin(e) {
 
         showMessage("loginMessage", "Đăng nhập thành công. Đang chuyển trang...", "success");
 
-        setTimeout(() => {
-            window.location.href = "check.html";
-        }, 900);
+       setTimeout(() => {
+    if (
+        user.email === "admin@drugsafe.vn" &&
+        user.role === "Admin"
+    ) {
+        window.location.href = "admin.html";
+    } else {
+        window.location.href = "check.html";
+    }
+}, 900);    
 
     } catch (error) {
         showMessage("loginMessage", "Đăng nhập thất bại. " + error.message);

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - DrugSafe</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin-page">
+
+<header class="header">
+    <div class="container header-content">
+        <div class="logo">Drug<span>Safe</span></div>
+
+        <nav class="nav">
+            <a href="admin.html">Admin</a>
+            <a href="index.html">Trang chủ</a>
+            <a href="check.html">Kiểm tra</a>
+            <a href="drugstore.html">DrugStore</a>
+            <a href="history.html">Lịch sử</a>
+            <a href="#" onclick="logoutAdmin()">Đăng xuất</a>
+        </nav>
+    </div>
+</header>
+
+<section class="admin-hero">
+    <div class="container admin-hero-grid">
+        <div>
+            <span class="premium-label">Admin Project Dashboard</span>
+            <h1>Quản lý toàn bộ dự án DrugSafe</h1>
+            <p>
+                Trang quản trị dành riêng cho Leader/Admin để theo dõi tiến độ,
+                quản lý công việc nhóm, xem lịch sử kiểm tra và đơn hàng DrugStore demo.
+            </p>
+        </div>
+
+        <div class="admin-profile-card">
+            <div class="admin-avatar">👨‍💻</div>
+            <h3 id="adminName">Quản trị viên</h3>
+            <p id="adminEmail">admin@drugsafe.vn</p>
+            <span class="admin-role">Admin duy nhất</span>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+
+        <div class="admin-stat-grid">
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon">📌</div>
+                <span>Tổng công việc</span>
+                <strong id="totalTasks">0</strong>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon todo">📝</div>
+                <span>To Do</span>
+                <strong id="todoTasks">0</strong>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon progress">⚙️</div>
+                <span>In Progress</span>
+                <strong id="progressTasks">0</strong>
+            </div>
+
+            <div class="admin-stat-card">
+                <div class="admin-stat-icon done">✅</div>
+                <span>Done</span>
+                <strong id="doneTasks">0</strong>
+            </div>
+        </div>
+
+        <div class="admin-progress-panel">
+            <div>
+                <h2>Tiến độ dự án</h2>
+                <p>Theo dõi tỷ lệ hoàn thành công việc của nhóm.</p>
+            </div>
+
+            <div class="progress-bar-wrap">
+                <div class="progress-bar">
+                    <div id="projectProgressBar" class="progress-bar-fill"></div>
+                </div>
+                <strong id="projectProgressText">0%</strong>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+
+            <div class="admin-panel">
+                <div class="admin-panel-heading">
+                    <div>
+                        <h2>Quản lý công việc dự án</h2>
+                        <p>Cập nhật trạng thái công việc của từng sinh viên.</p>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="resetProjectTasks()">
+                        Reset dữ liệu
+                    </button>
+                </div>
+
+                <div id="adminMessage" class="message"></div>
+
+                <div class="admin-toolbar">
+                    <input 
+                        type="text" 
+                        id="taskSearch" 
+                        class="form-control" 
+                        placeholder="Tìm công việc, epic hoặc sinh viên..."
+                    >
+
+                    <select id="memberFilter" class="form-control">
+                        <option value="all">Tất cả sinh viên</option>
+                        <option value="SV1">SV1 - Leader</option>
+                        <option value="SV2">SV2 - Frontend</option>
+                        <option value="SV3">SV3 - User/History</option>
+                        <option value="SV4">SV4 - Recommendation</option>
+                        <option value="SV5">SV5 - Testing/Deploy</option>
+                    </select>
+
+                    <select id="statusFilter" class="form-control">
+                        <option value="all">Tất cả trạng thái</option>
+                        <option value="To Do">To Do</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <table class="table admin-table">
+                        <thead>
+                            <tr>
+                                <th>Mã</th>
+                                <th>Công việc</th>
+                                <th>Epic</th>
+                                <th>Người làm</th>
+                                <th>Ưu tiên</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taskTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <aside class="admin-side">
+
+                <div class="admin-panel small-panel">
+                    <h2>Phân công nhóm</h2>
+
+                    <div class="member-card">
+                        <strong>SV1 - Leader</strong>
+                        <span>Backend API, Database, Drug, Disease, Check</span>
+                    </div>
+
+                    <div class="member-card">
+                        <strong>SV2 - Frontend UI</strong>
+                        <span>Home, Check, DrugStore, Cart, Login/Register</span>
+                    </div>
+
+                    <div class="member-card">
+                        <strong>SV3 - User & History</strong>
+                        <span>Tài khoản, đăng nhập, lịch sử tra cứu</span>
+                    </div>
+
+                    <div class="member-card">
+                        <strong>SV4 - Recommendation</strong>
+                        <span>Gợi ý thuốc thay thế, đề xuất an toàn</span>
+                    </div>
+
+                    <div class="member-card">
+                        <strong>SV5 - Testing & Deployment</strong>
+                        <span>Test case, unit test, hướng dẫn cài đặt, deploy</span>
+                    </div>
+                </div>
+
+                <div class="admin-panel small-panel">
+                    <h2>Dữ liệu hệ thống</h2>
+
+                    <div class="system-data-row">
+                        <span>Lịch sử tra cứu</span>
+                        <strong id="historyCount">0</strong>
+                    </div>
+
+                    <div class="system-data-row">
+                        <span>Đơn hàng DrugStore</span>
+                        <strong id="orderCount">0</strong>
+                    </div>
+
+                    <div class="system-data-row">
+                        <span>Sản phẩm trong giỏ</span>
+                        <strong id="cartCount">0</strong>
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+
+        <div class="admin-grid-two">
+
+            <div class="admin-panel">
+                <h2>Lịch sử kiểm tra gần đây</h2>
+                <p class="admin-muted">Dữ liệu lấy từ localStorage của trang kiểm tra thuốc.</p>
+
+                <div id="recentHistoryList" class="admin-list"></div>
+            </div>
+
+            <div class="admin-panel">
+                <h2>Đơn hàng DrugStore gần đây</h2>
+                <p class="admin-muted">Dữ liệu đơn hàng demo sau khi người dùng thanh toán.</p>
+
+                <div id="recentOrderList" class="admin-list"></div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 DrugSafe - Admin Dashboard</p>
+    </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/store-data.js"></script>
+<script src="js/admin.js"></script>
+
+</body>
+</html>
