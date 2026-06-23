@@ -23,19 +23,66 @@
     </div>
 </header>
 
-<section class="hero">
-    <div class="container">
+<section class="hero hero-premium">
+    <div class="container hero-premium-grid">
         <div class="hero-box">
+            <span class="premium-label">Medical Decision Support System</span>
+
             <h1>Kiểm tra chống chỉ định thuốc nhanh chóng và an toàn</h1>
+
             <p>
-                Hệ thống hỗ trợ người dùng kiểm tra thuốc với bệnh nền,
-                phát hiện tương tác thuốc và đưa ra gợi ý sử dụng an toàn hơn.
+                DrugSafe hỗ trợ kiểm tra thuốc với bệnh nền, phát hiện tương tác thuốc,
+                phân loại mức độ cảnh báo và gợi ý hướng sử dụng an toàn hơn.
             </p>
 
             <div class="hero-actions">
                 <a href="check.html" class="btn btn-light">Kiểm tra ngay</a>
-                <a href="#features" class="btn btn-outline">Xem chức năng</a>
                 <a href="drugstore.html" class="btn btn-primary">Khám phá DrugStore</a>
+                <a href="#drug-catalog" class="btn btn-outline">Xem danh mục thuốc</a>
+            </div>
+
+            <div class="hero-stats">
+                <div>
+                    <strong>25+</strong>
+                    <span>Thuốc mẫu</span>
+                </div>
+                <div>
+                    <strong>10+</strong>
+                    <span>Bệnh nền</span>
+                </div>
+                <div>
+                    <strong>3 cấp</strong>
+                    <span>Cảnh báo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-dashboard">
+            <div class="dashboard-card active">
+                <div class="dash-icon">💊</div>
+                <div>
+                    <strong>Aspirin</strong>
+                    <span>Nguy cơ với viêm loét dạ dày</span>
+                </div>
+                <span class="risk-badge high">High</span>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="dash-icon">🧪</div>
+                <div>
+                    <strong>Warfarin + Aspirin</strong>
+                    <span>Tăng nguy cơ chảy máu</span>
+                </div>
+                <span class="risk-badge medium">Medium</span>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="dash-icon">✅</div>
+                <div>
+                    <strong>Paracetamol</strong>
+                    <span>Gợi ý thay thế phù hợp hơn</span>
+                </div>
+                <span class="risk-badge low">Safe</span>
             </div>
         </div>
     </div>
@@ -50,28 +97,240 @@
         </p>
 
         <div class="cards">
-            <div class="card">
+            <div class="card premium-card">
                 <div class="card-icon">💊</div>
                 <h3>Kiểm tra chống chỉ định</h3>
                 <p>
-                    Phát hiện thuốc không phù hợp với tình trạng bệnh nền của người dùng.
+                    Phát hiện thuốc không phù hợp với tình trạng bệnh nền của người dùng
+                    như suy gan, suy thận, hen suyễn hoặc viêm loét dạ dày.
                 </p>
             </div>
 
-            <div class="card">
+            <div class="card premium-card">
                 <div class="card-icon">⚠️</div>
                 <h3>Cảnh báo tương tác thuốc</h3>
                 <p>
-                    Kiểm tra nguy cơ tương tác khi sử dụng nhiều loại thuốc cùng lúc.
+                    Kiểm tra nguy cơ khi sử dụng nhiều loại thuốc cùng lúc,
+                    ví dụ Warfarin kết hợp Aspirin có thể làm tăng nguy cơ chảy máu.
                 </p>
             </div>
 
-            <div class="card">
+            <div class="card premium-card">
                 <div class="card-icon">✅</div>
                 <h3>Gợi ý an toàn hơn</h3>
                 <p>
-                    Đề xuất thuốc thay thế hoặc hướng xử lý phù hợp khi có cảnh báo.
+                    Đề xuất thuốc thay thế hoặc hướng xử lý phù hợp khi hệ thống phát hiện rủi ro.
                 </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section catalog-section" id="drug-catalog">
+    <div class="container">
+        <h2 class="section-title">Danh mục thuốc liên quan đến đồ án</h2>
+        <p class="section-desc">
+            Danh mục thuốc mẫu phục vụ kiểm tra chống chỉ định, tương tác thuốc và gợi ý thay thế.
+        </p>
+
+        <div class="catalog-toolbar">
+            <input 
+                type="text" 
+                id="homeDrugSearch" 
+                class="form-control" 
+                placeholder="Tìm thuốc, hoạt chất hoặc nhóm thuốc..."
+            >
+
+            <select id="homeCategoryFilter" class="form-control">
+                <option value="all">Tất cả nhóm thuốc</option>
+                <option value="pain">Giảm đau - Hạ sốt</option>
+                <option value="nsaid">Kháng viêm NSAID</option>
+                <option value="cardio">Tim mạch - Chống đông</option>
+                <option value="diabetes">Đái tháo đường</option>
+                <option value="digestive">Tiêu hóa</option>
+                <option value="vitamin">Vitamin - Hỗ trợ</option>
+            </select>
+        </div>
+
+        <div class="drug-category-grid">
+            <div class="drug-category-card">
+                <div class="drug-category-icon">🌡️</div>
+                <h3>Giảm đau - Hạ sốt</h3>
+                <p>Paracetamol, Acetaminophen</p>
+            </div>
+
+            <div class="drug-category-card">
+                <div class="drug-category-icon">🧬</div>
+                <h3>Kháng viêm NSAID</h3>
+                <p>Aspirin, Ibuprofen, Diclofenac</p>
+            </div>
+
+            <div class="drug-category-card">
+                <div class="drug-category-icon">❤️</div>
+                <h3>Tim mạch</h3>
+                <p>Warfarin, Amlodipine, Atenolol</p>
+            </div>
+
+            <div class="drug-category-card">
+                <div class="drug-category-icon">🩸</div>
+                <h3>Đái tháo đường</h3>
+                <p>Metformin, Insulin, Glibenclamide</p>
+            </div>
+        </div>
+
+        <div class="home-drug-grid" id="homeDrugGrid">
+
+            <div class="home-drug-card" data-category="pain" data-keyword="paracetamol acetaminophen giam dau ha sot">
+                <div class="drug-top">
+                    <div class="drug-avatar">💊</div>
+                    <span class="risk-badge low">Thông dụng</span>
+                </div>
+                <h3>Paracetamol 500mg</h3>
+                <p>Hoạt chất: Paracetamol</p>
+                <div class="drug-warning low-text">Cần thận trọng với bệnh nhân suy gan.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="nsaid" data-keyword="aspirin acetylsalicylic acid nsaid viem loet da day hen suyen">
+                <div class="drug-top">
+                    <div class="drug-avatar">🧪</div>
+                    <span class="risk-badge high">High Risk</span>
+                </div>
+                <h3>Aspirin</h3>
+                <p>Hoạt chất: Acetylsalicylic Acid</p>
+                <div class="drug-warning high-text">Không phù hợp với viêm loét dạ dày, hen suyễn.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="nsaid" data-keyword="ibuprofen nsaid suy than viem loet da day">
+                <div class="drug-top">
+                    <div class="drug-avatar">💉</div>
+                    <span class="risk-badge medium">Medium</span>
+                </div>
+                <h3>Ibuprofen</h3>
+                <p>Hoạt chất: Ibuprofen</p>
+                <div class="drug-warning medium-text">Thận trọng với suy thận và bệnh lý dạ dày.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="cardio" data-keyword="warfarin chong dong mau aspirin chay mau">
+                <div class="drug-top">
+                    <div class="drug-avatar">🩸</div>
+                    <span class="risk-badge high">High Risk</span>
+                </div>
+                <h3>Warfarin</h3>
+                <p>Nhóm: Thuốc chống đông máu</p>
+                <div class="drug-warning high-text">Tương tác nguy hiểm với Aspirin, tăng nguy cơ chảy máu.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="diabetes" data-keyword="metformin dai thao duong suy than">
+                <div class="drug-top">
+                    <div class="drug-avatar">🩺</div>
+                    <span class="risk-badge medium">Cần lưu ý</span>
+                </div>
+                <h3>Metformin</h3>
+                <p>Nhóm: Điều trị đái tháo đường type 2</p>
+                <div class="drug-warning high-text">Không phù hợp với bệnh nhân suy thận nặng.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="cardio" data-keyword="amlodipine tang huyet ap tim mach">
+                <div class="drug-top">
+                    <div class="drug-avatar">❤️</div>
+                    <span class="risk-badge low">Theo dõi</span>
+                </div>
+                <h3>Amlodipine</h3>
+                <p>Nhóm: Điều trị tăng huyết áp</p>
+                <div class="drug-warning low-text">Cần theo dõi huyết áp khi sử dụng.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="digestive" data-keyword="omeprazole da day trao nguoc bao ve da day">
+                <div class="drug-top">
+                    <div class="drug-avatar">🧫</div>
+                    <span class="risk-badge low">Tiêu hóa</span>
+                </div>
+                <h3>Omeprazole</h3>
+                <p>Nhóm: Thuốc dạ dày</p>
+                <div class="drug-warning low-text">Thường dùng để giảm acid dạ dày.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+            <div class="home-drug-card" data-category="vitamin" data-keyword="vitamin c ascorbic acid tang de khang">
+                <div class="drug-top">
+                    <div class="drug-avatar">🍊</div>
+                    <span class="risk-badge low">Hỗ trợ</span>
+                </div>
+                <h3>Vitamin C</h3>
+                <p>Hoạt chất: Ascorbic Acid</p>
+                <div class="drug-warning low-text">Không nên lạm dụng liều cao kéo dài.</div>
+                <a href="check.html" class="btn btn-primary">Kiểm tra thuốc</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section disease-section">
+    <div class="container">
+        <h2 class="section-title">Bệnh nền thường được kiểm tra</h2>
+        <p class="section-desc">
+            Các bệnh nền này có thể ảnh hưởng đến việc lựa chọn thuốc và mức độ an toàn khi sử dụng.
+        </p>
+
+        <div class="disease-grid">
+            <div class="disease-pill">Viêm loét dạ dày</div>
+            <div class="disease-pill">Hen suyễn</div>
+            <div class="disease-pill">Suy gan</div>
+            <div class="disease-pill">Suy thận</div>
+            <div class="disease-pill">Tăng huyết áp</div>
+            <div class="disease-pill">Đái tháo đường</div>
+            <div class="disease-pill">Bệnh tim mạch</div>
+            <div class="disease-pill">Rối loạn đông máu</div>
+        </div>
+    </div>
+</section>
+
+<section class="section store-preview-section">
+    <div class="container store-preview">
+        <div>
+            <span class="premium-label dark-label">DrugStore Premium</span>
+            <h2>Trải nghiệm giao diện DrugStore hiện đại</h2>
+            <p>
+                DrugStore là chức năng mô phỏng thương mại điện tử giúp hiển thị sản phẩm dạng card,
+                xem chi tiết sản phẩm và thêm vào giỏ hàng phục vụ demo UI/UX.
+            </p>
+
+            <div class="hero-actions">
+                <a href="drugstore.html" class="btn btn-primary">Mở DrugStore</a>
+                <a href="cart.html" class="btn btn-light">Xem giỏ hàng</a>
+            </div>
+        </div>
+
+        <div class="store-preview-card">
+            <div class="mini-product">
+                <span>💊</span>
+                <div>
+                    <strong>Paracetamol</strong>
+                    <p>25.000đ</p>
+                </div>
+            </div>
+
+            <div class="mini-product">
+                <span>🧪</span>
+                <div>
+                    <strong>Aspirin</strong>
+                    <p>Cần kiểm tra bệnh nền</p>
+                </div>
+            </div>
+
+            <div class="mini-product">
+                <span>🛒</span>
+                <div>
+                    <strong>Giỏ hàng</strong>
+                    <p>Demo localStorage</p>
+                </div>
             </div>
         </div>
     </div>
@@ -81,23 +340,23 @@
     <div class="container">
         <h2 class="section-title">Quy trình sử dụng</h2>
         <p class="section-desc">
-            Người dùng chỉ cần nhập thuốc, chọn bệnh nền và xem kết quả cảnh báo.
+            Người dùng chỉ cần chọn thuốc, chọn bệnh nền và xem kết quả cảnh báo.
         </p>
 
         <div class="cards">
-            <div class="card">
+            <div class="card premium-card">
                 <div class="card-icon">1</div>
-                <h3>Nhập thông tin</h3>
-                <p>Nhập tên thuốc và chọn bệnh nền cần kiểm tra.</p>
+                <h3>Chọn thuốc</h3>
+                <p>Chọn thuốc từ danh mục có sẵn thay vì nhập thủ công.</p>
             </div>
 
-            <div class="card">
+            <div class="card premium-card">
                 <div class="card-icon">2</div>
                 <h3>Phân tích dữ liệu</h3>
                 <p>Hệ thống truy vấn dữ liệu chống chỉ định và tương tác thuốc.</p>
             </div>
 
-            <div class="card">
+            <div class="card premium-card">
                 <div class="card-icon">3</div>
                 <h3>Hiển thị kết quả</h3>
                 <p>Người dùng nhận cảnh báo, mức độ nguy hiểm và gợi ý nếu có.</p>
@@ -111,6 +370,30 @@
         <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
     </div>
 </footer>
+
+<script>
+    const searchInput = document.getElementById("homeDrugSearch");
+    const categoryFilter = document.getElementById("homeCategoryFilter");
+    const drugCards = document.querySelectorAll(".home-drug-card");
+
+    function filterHomeDrugs() {
+        const keyword = searchInput.value.toLowerCase().trim();
+        const category = categoryFilter.value;
+
+        drugCards.forEach(card => {
+            const cardKeyword = card.dataset.keyword.toLowerCase();
+            const cardCategory = card.dataset.category;
+
+            const matchKeyword = cardKeyword.includes(keyword);
+            const matchCategory = category === "all" || cardCategory === category;
+
+            card.style.display = matchKeyword && matchCategory ? "block" : "none";
+        });
+    }
+
+    searchInput.addEventListener("input", filterHomeDrugs);
+    categoryFilter.addEventListener("change", filterHomeDrugs);
+</script>
 
 </body>
 </html>
