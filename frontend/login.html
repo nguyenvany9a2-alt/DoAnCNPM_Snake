@@ -6,7 +6,7 @@
     <title>Đăng nhập - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="auth-page">
 
 <header class="header">
     <div class="container header-content">
@@ -14,63 +14,130 @@
 
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
+            <a href="drugstore.html">DrugStore</a>
             <a href="check.html">Kiểm tra</a>
+            <a href="history.html">Lịch sử</a>
+            <a href="login.html">Đăng nhập</a>
             <a href="register.html">Đăng ký</a>
+            <a href="cart.html" class="cart-link">Giỏ hàng <span id="cartBadge">0</span></a>
         </nav>
     </div>
 </header>
 
-<section class="section">
-    <div class="container">
-        <div class="form-box">
-            <div class="card-icon" style="margin: 0 auto 16px;">🔐</div>
-            <h2>Đăng nhập hệ thống</h2>
+<section class="auth-section">
+    <div class="container auth-shell">
+
+        <div class="auth-visual">
+            <span class="premium-label">Secure Access</span>
+            <h1>Đăng nhập vào DrugSafe</h1>
+            <p>
+                Truy cập hệ thống để kiểm tra chống chỉ định thuốc, xem lịch sử tra cứu
+                và sử dụng DrugStore demo.
+            </p>
+
+            <div class="auth-benefits">
+                <div class="auth-benefit">
+                    <span>🛡️</span>
+                    <div>
+                        <strong>Bảo vệ người dùng</strong>
+                        <p>Hỗ trợ cảnh báo nguy cơ khi sử dụng thuốc với bệnh nền.</p>
+                    </div>
+                </div>
+
+                <div class="auth-benefit">
+                    <span>📋</span>
+                    <div>
+                        <strong>Lưu lịch sử tra cứu</strong>
+                        <p>Theo dõi lại các lần kiểm tra chống chỉ định và tương tác thuốc.</p>
+                    </div>
+                </div>
+
+                <div class="auth-benefit">
+                    <span>💊</span>
+                    <div>
+                        <strong>Danh mục thuốc</strong>
+                        <p>Truy cập DrugStore và danh mục thuốc phục vụ demo đồ án.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-card-premium">
+            <div class="auth-card-header">
+                <div class="auth-icon">🔐</div>
+                <h2>Đăng nhập</h2>
+                <p>Nhập thông tin tài khoản để tiếp tục sử dụng hệ thống.</p>
+            </div>
 
             <div id="loginMessage" class="message"></div>
 
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        class="form-control" 
-                        placeholder="Nhập email của bạn"
-                    >
+                    <div class="input-with-icon">
+                        <span>✉️</span>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-control" 
+                            placeholder="Ví dụ: nguyenvany@gmail.com"
+                        >
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mật khẩu</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        class="form-control" 
-                        placeholder="Nhập mật khẩu"
-                    >
+                    <div class="input-with-icon">
+                        <span>🔑</span>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-control" 
+                            placeholder="Nhập mật khẩu"
+                        >
+                        <button type="button" class="toggle-password" data-target="password">
+                            Hiện
+                        </button>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width:100%;">
+                <div class="auth-options">
+                    <label>
+                        <input type="checkbox" id="rememberMe">
+                        Ghi nhớ đăng nhập
+                    </label>
+
+                    <a href="#" onclick="showForgotPasswordMessage(event)">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary auth-submit">
                     Đăng nhập
                 </button>
             </form>
 
-            <p style="text-align:center; margin-top:18px; color:#6b7280;">
+            <div class="demo-account-box">
+                <strong>Tài khoản test gợi ý</strong>
+                <p>Email: testuser@gmail.com</p>
+                <p>Mật khẩu: 123456</p>
+            </div>
+
+            <p class="auth-switch">
                 Chưa có tài khoản?
-                <a href="register.html" style="color:#0f766e; font-weight:700;">
-                    Đăng ký ngay
-                </a>
+                <a href="register.html">Đăng ký ngay</a>
             </p>
         </div>
+
     </div>
 </section>
 
 <footer class="footer">
     <div class="container">
-        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+        <p>© 2026 DrugSafe - Đăng nhập hệ thống</p>
     </div>
 </footer>
 
 <script src="js/api.js"></script>
+<script src="js/store-data.js"></script>
 <script src="js/login.js"></script>
 
 </body>

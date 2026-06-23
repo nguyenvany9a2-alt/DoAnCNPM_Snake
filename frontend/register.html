@@ -6,7 +6,7 @@
     <title>Đăng ký - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="auth-page">
 
 <header class="header">
     <div class="container header-content">
@@ -14,83 +14,164 @@
 
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
+            <a href="drugstore.html">DrugStore</a>
             <a href="check.html">Kiểm tra</a>
+            <a href="history.html">Lịch sử</a>
             <a href="login.html">Đăng nhập</a>
+            <a href="register.html">Đăng ký</a>
+            <a href="cart.html" class="cart-link">Giỏ hàng <span id="cartBadge">0</span></a>
         </nav>
     </div>
 </header>
 
-<section class="section">
-    <div class="container">
-        <div class="form-box">
-            <div class="card-icon" style="margin: 0 auto 16px;">👤</div>
-            <h2>Đăng ký tài khoản</h2>
+<section class="auth-section">
+    <div class="container auth-shell">
+
+        <div class="auth-visual register-visual">
+            <span class="premium-label">Create Account</span>
+            <h1>Tạo tài khoản DrugSafe</h1>
+            <p>
+                Đăng ký tài khoản để sử dụng đầy đủ chức năng kiểm tra thuốc,
+                xem lịch sử tra cứu và trải nghiệm DrugStore demo.
+            </p>
+
+            <div class="auth-stat-mini">
+                <div>
+                    <strong>25+</strong>
+                    <span>Thuốc mẫu</span>
+                </div>
+                <div>
+                    <strong>10+</strong>
+                    <span>Bệnh nền</span>
+                </div>
+                <div>
+                    <strong>3 cấp</strong>
+                    <span>Cảnh báo</span>
+                </div>
+            </div>
+
+            <div class="auth-benefits">
+                <div class="auth-benefit">
+                    <span>✅</span>
+                    <div>
+                        <strong>Kiểm tra nhanh</strong>
+                        <p>Chọn thuốc, chọn bệnh nền và nhận cảnh báo rõ ràng.</p>
+                    </div>
+                </div>
+
+                <div class="auth-benefit">
+                    <span>⚠️</span>
+                    <div>
+                        <strong>Phân loại rủi ro</strong>
+                        <p>Hiển thị mức Low, Medium, High giúp người dùng dễ hiểu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-card-premium">
+            <div class="auth-card-header">
+                <div class="auth-icon">👤</div>
+                <h2>Đăng ký tài khoản</h2>
+                <p>Điền thông tin bên dưới để tạo tài khoản mới.</p>
+            </div>
 
             <div id="registerMessage" class="message"></div>
 
             <form id="registerForm">
                 <div class="form-group">
                     <label for="fullName">Họ tên</label>
-                    <input 
-                        type="text" 
-                        id="fullName" 
-                        class="form-control" 
-                        placeholder="Nhập họ tên"
-                    >
+                    <div class="input-with-icon">
+                        <span>👤</span>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            class="form-control" 
+                            placeholder="Ví dụ: Nguyễn Văn Ý"
+                        >
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        class="form-control" 
-                        placeholder="Nhập email"
-                    >
+                    <div class="input-with-icon">
+                        <span>✉️</span>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            class="form-control" 
+                            placeholder="Ví dụ: nguyenvany@gmail.com"
+                        >
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mật khẩu</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        class="form-control" 
-                        placeholder="Tối thiểu 6 ký tự"
-                    >
+                    <div class="input-with-icon">
+                        <span>🔑</span>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-control" 
+                            placeholder="Tối thiểu 6 ký tự"
+                        >
+                        <button type="button" class="toggle-password" data-target="password">
+                            Hiện
+                        </button>
+                    </div>
+                </div>
+
+                <div class="password-rules">
+                    <p id="ruleLength">• Tối thiểu 6 ký tự</p>
+                    <p id="ruleNumber">• Có ít nhất 1 chữ số</p>
+                    <p id="ruleLetter">• Có ít nhất 1 chữ cái</p>
                 </div>
 
                 <div class="form-group">
                     <label for="confirmPassword">Xác nhận mật khẩu</label>
-                    <input 
-                        type="password" 
-                        id="confirmPassword" 
-                        class="form-control" 
-                        placeholder="Nhập lại mật khẩu"
-                    >
+                    <div class="input-with-icon">
+                        <span>🔁</span>
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            class="form-control" 
+                            placeholder="Nhập lại mật khẩu"
+                        >
+                        <button type="button" class="toggle-password" data-target="confirmPassword">
+                            Hiện
+                        </button>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width:100%;">
-                    Đăng ký
+                <label class="policy-check auth-policy">
+                    <input type="checkbox" id="agreePolicy">
+                    <span>
+                        Tôi xác nhận hệ thống chỉ hỗ trợ tham khảo, không thay thế tư vấn y tế chuyên môn.
+                    </span>
+                </label>
+
+                <button type="submit" class="btn btn-primary auth-submit">
+                    Tạo tài khoản
                 </button>
             </form>
 
-            <p style="text-align:center; margin-top:18px; color:#6b7280;">
+            <p class="auth-switch">
                 Đã có tài khoản?
-                <a href="login.html" style="color:#0f766e; font-weight:700;">
-                    Đăng nhập
-                </a>
+                <a href="login.html">Đăng nhập</a>
             </p>
         </div>
+
     </div>
 </section>
 
 <footer class="footer">
     <div class="container">
-        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+        <p>© 2026 DrugSafe - Đăng ký tài khoản</p>
     </div>
 </footer>
 
 <script src="js/api.js"></script>
+<script src="js/store-data.js"></script>
 <script src="js/register.js"></script>
 
 </body>
