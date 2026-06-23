@@ -2,18 +2,21 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Kết quả kiểm tra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả kiểm tra - DrugSafe</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
     <div class="container header-content">
-        <div class="logo">Drug Safe</div>
+        <div class="logo">Drug<span>Safe</span></div>
+
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
             <a href="check.html">Kiểm tra lại</a>
             <a href="history.html">Lịch sử</a>
+            <a href="login.html">Đăng nhập</a>
         </nav>
     </div>
 </header>
@@ -21,15 +24,23 @@
 <section class="section">
     <div class="container">
         <h2 class="section-title">Kết quả kiểm tra</h2>
+        <p class="section-desc">
+            Dưới đây là kết quả phân tích dựa trên dữ liệu thuốc, bệnh nền và tương tác thuốc trong hệ thống.
+        </p>
 
         <div id="resultBox"></div>
 
-        <a href="check.html" class="btn btn-primary">Quay lại kiểm tra</a>
+        <div style="margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="check.html" class="btn btn-primary">Quay lại kiểm tra</a>
+            <a href="history.html" class="btn btn-light">Xem lịch sử</a>
+        </div>
     </div>
 </section>
 
 <footer class="footer">
-    <p>© 2026 Drug Safe - Đồ án Công nghệ phần mềm</p>
+    <div class="container">
+        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+    </div>
 </footer>
 
 <script src="js/api.js"></script>
