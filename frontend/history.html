@@ -14,56 +14,173 @@
 
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
+            <a href="drugstore.html">DrugStore</a>
             <a href="check.html">Kiểm tra</a>
-            <a href="result.html">Kết quả</a>
+            <a href="history.html">Lịch sử</a>
             <a href="login.html">Đăng nhập</a>
+            <a href="cart.html" class="cart-link">Giỏ hàng <span id="cartBadge">0</span></a>
         </nav>
     </div>
 </header>
 
-<section class="section">
-    <div class="container">
-        <h2 class="section-title">Lịch sử tra cứu</h2>
-        <p class="section-desc">
-            Danh sách các lần kiểm tra thuốc đã thực hiện trên hệ thống.
-        </p>
-
-        <div class="result-card">
-            <h3>Thông tin lịch sử</h3>
+<section class="history-hero">
+    <div class="container history-hero-grid">
+        <div>
+            <span class="premium-label">Search History</span>
+            <h1>Lịch sử tra cứu thuốc</h1>
             <p>
-                Lịch sử giúp người dùng theo dõi lại các lần kiểm tra chống chỉ định
-                và tương tác thuốc trước đó.
+                Theo dõi lại toàn bộ kết quả kiểm tra chống chỉ định, tương tác thuốc
+                và mức độ cảnh báo đã thực hiện trên hệ thống DrugSafe.
             </p>
+
+            <div class="hero-actions">
+                <a href="check.html" class="btn btn-light">Kiểm tra mới</a>
+                <a href="drugstore.html" class="btn btn-outline">Mở DrugStore</a>
+            </div>
         </div>
 
-        <div style="overflow-x:auto;">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Loại kiểm tra</th>
-                        <th>Danh sách thuốc</th>
-                        <th>Kết quả</th>
-                    </tr>
-                </thead>
-                <tbody id="historyTable"></tbody>
-            </table>
-        </div>
-
-        <div style="margin-top: 24px;">
-            <a href="check.html" class="btn btn-primary">Thực hiện kiểm tra mới</a>
+        <div class="history-hero-card">
+            <div class="hero-product-icon">📋</div>
+            <h3>Theo dõi an toàn sử dụng thuốc</h3>
+            <p>
+                Lịch sử giúp người dùng xem lại các cảnh báo quan trọng trước đó
+                và hỗ trợ quá trình tư vấn sử dụng thuốc.
+            </p>
         </div>
     </div>
 </section>
 
+<section class="section">
+    <div class="container">
+
+        <div class="history-stat-grid">
+            <div class="history-stat-card">
+                <div class="history-stat-icon">📌</div>
+                <div>
+                    <span>Tổng tra cứu</span>
+                    <strong id="totalHistory">0</strong>
+                </div>
+            </div>
+
+            <div class="history-stat-card">
+                <div class="history-stat-icon danger">⚠️</div>
+                <div>
+                    <span>Có cảnh báo</span>
+                    <strong id="warningHistory">0</strong>
+                </div>
+            </div>
+
+            <div class="history-stat-card">
+                <div class="history-stat-icon high">🚨</div>
+                <div>
+                    <span>Nguy cơ cao</span>
+                    <strong id="highRiskHistory">0</strong>
+                </div>
+            </div>
+
+            <div class="history-stat-card">
+                <div class="history-stat-icon success">✅</div>
+                <div>
+                    <span>An toàn</span>
+                    <strong id="safeHistory">0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-panel">
+            <div class="history-panel-heading">
+                <div>
+                    <h2>Lịch sử kiểm tra</h2>
+                    <p>Tra cứu, lọc, xem chi tiết hoặc xuất dữ liệu lịch sử.</p>
+                </div>
+
+                <div class="history-heading-actions">
+                    <button class="btn btn-light" onclick="exportHistoryCSV()">Xuất CSV</button>
+                    <button class="btn btn-light" onclick="printHistory()">In lịch sử</button>
+                    <button class="btn btn-danger" onclick="clearAllHistory()">Xóa tất cả</button>
+                </div>
+            </div>
+
+            <div id="historyMessage" class="message"></div>
+
+            <div class="history-toolbar">
+                <input 
+                    type="text" 
+                    id="historySearch" 
+                    class="form-control" 
+                    placeholder="Tìm theo tên thuốc, bệnh nền hoặc nội dung cảnh báo..."
+                >
+
+                <select id="historyTypeFilter" class="form-control">
+                    <option value="all">Tất cả loại kiểm tra</option>
+                    <option value="contraindication">Chống chỉ định</option>
+                    <option value="interaction">Tương tác thuốc</option>
+                    <option value="comprehensive">Kiểm tra toàn diện</option>
+                </select>
+
+                <select id="historyRiskFilter" class="form-control">
+                    <option value="all">Tất cả mức độ</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low/Safe</option>
+                </select>
+            </div>
+
+            <div class="history-table-wrapper">
+                <table class="table history-table">
+                    <thead>
+                        <tr>
+                            <th>Thời gian</th>
+                            <th>Loại kiểm tra</th>
+                            <th>Danh sách thuốc</th>
+                            <th>Bệnh nền</th>
+                            <th>Mức độ</th>
+                            <th>Kết quả</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="history-guide-card">
+            <div class="guide-icon">💡</div>
+            <div>
+                <h3>Hướng dẫn đọc lịch sử</h3>
+                <p>
+                    Mỗi dòng là một lần kiểm tra. Nếu mức độ là <strong>High</strong>, người dùng nên tham khảo ý kiến bác sĩ hoặc dược sĩ trước khi sử dụng thuốc.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div id="historyDetailModal" class="history-modal-overlay">
+    <div class="history-modal">
+        <button class="history-modal-close" onclick="closeHistoryDetail()">×</button>
+
+        <div class="success-icon">📋</div>
+        <h2>Chi tiết lịch sử tra cứu</h2>
+
+        <div id="historyDetailContent"></div>
+
+        <div class="modal-actions">
+            <a href="check.html" class="btn btn-light">Kiểm tra mới</a>
+            <button class="btn btn-primary" onclick="closeHistoryDetail()">Đóng</button>
+        </div>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="container">
-        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+        <p>© 2026 DrugSafe - Lịch sử tra cứu thuốc</p>
     </div>
 </footer>
 
 <script src="js/api.js"></script>
+<script src="js/store-data.js"></script>
 <script src="js/history.js"></script>
 
 </body>
-</html>
