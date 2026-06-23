@@ -14,89 +14,215 @@
 
         <nav class="nav">
             <a href="index.html">Trang chủ</a>
+            <a href="drugstore.html">DrugStore</a>
             <a href="check.html">Kiểm tra</a>
             <a href="history.html">Lịch sử</a>
             <a href="login.html">Đăng nhập</a>
+            <a href="cart.html" class="cart-link">Giỏ hàng <span id="cartBadge">0</span></a>
         </nav>
     </div>
 </header>
 
-<section class="section">
+<section class="check-hero">
+    <div class="container check-hero-grid">
+        <div>
+            <span class="premium-label">Drug Safety Checker</span>
+            <h1>Kiểm tra thuốc trước khi sử dụng</h1>
+            <p>
+                Chọn thuốc từ danh mục, chọn bệnh nền và để hệ thống phân tích nguy cơ
+                chống chỉ định hoặc tương tác thuốc.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#check-area" class="btn btn-light">Bắt đầu kiểm tra</a>
+                <a href="drugstore.html" class="btn btn-outline">Xem DrugStore</a>
+            </div>
+        </div>
+
+        <div class="check-hero-card">
+            <div class="hero-product-icon">🛡️</div>
+            <h3>Hỗ trợ quyết định an toàn</h3>
+            <p>
+                Kết quả chỉ mang tính tham khảo, không thay thế tư vấn của bác sĩ hoặc dược sĩ.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="check-area">
     <div class="container">
+
+        <div class="check-steps">
+            <div class="check-step active">
+                <span>1</span>
+                <p>Chọn thuốc</p>
+            </div>
+            <div class="check-line"></div>
+            <div class="check-step active">
+                <span>2</span>
+                <p>Chọn bệnh nền</p>
+            </div>
+            <div class="check-line"></div>
+            <div class="check-step active">
+                <span>3</span>
+                <p>Nhận cảnh báo</p>
+            </div>
+        </div>
+
         <h2 class="section-title">Kiểm tra chống chỉ định và tương tác thuốc</h2>
         <p class="section-desc">
-            Nhập thuốc đang sử dụng và chọn bệnh nền để hệ thống phân tích nguy cơ.
+            Người dùng chỉ cần chọn thuốc trong danh mục có sẵn, chọn bệnh nền và bấm kiểm tra.
         </p>
 
         <div id="checkMessage" class="message"></div>
 
-        <div class="check-layout">
-            <div class="card">
-            <div class="card-icon">💊</div>
-            <h3>Danh sách thuốc</h3>
+        <div class="check-layout premium-check-layout">
 
-            <div class="form-group">
-                <label for="drugSelect">Chọn thuốc</label>
-                <select id="drugSelect" class="form-control">
-                    <option value="">-- Chọn thuốc --</option>
-                </select>
-            </div>
+            <div class="check-main-panel">
 
-            <button id="addDrugBtn" class="btn btn-primary">
-                Thêm thuốc
-            </button>
+                <div class="card check-card">
+                    <div class="card-heading">
+                        <div class="card-icon">💊</div>
+                        <div>
+                            <h3>Danh sách thuốc cần kiểm tra</h3>
+                            <p>Chọn một hoặc nhiều thuốc từ danh mục có sẵn.</p>
+                        </div>
+                    </div>
 
-            <div class="drug-list" id="drugList"></div>
+                    <div class="form-group">
+                        <label for="drugSelect">Chọn thuốc</label>
+                        <div class="inline-input">
+                            <select id="drugSelect" class="form-control">
+                                <option value="">-- Đang tải danh mục thuốc --</option>
+                            </select>
 
-            <div class="guide-box">
-                <strong>Hướng dẫn chọn thuốc:</strong>
-                <ul>
-                    <li>Chọn thuốc trong danh mục có sẵn.</li>
-                    <li>Bấm "Thêm thuốc" để đưa thuốc vào danh sách kiểm tra.</li>
-                    <li>Có thể chọn nhiều thuốc để kiểm tra tương tác.</li>
-                </ul>
-            </div>
-        </div>
+                            <button id="addDrugBtn" class="btn btn-primary">
+                                Thêm thuốc
+                            </button>
+                        </div>
+                    </div>
 
-            <div class="card">
-                <div class="card-icon">🩺</div>
-                <h3>Thông tin bệnh nền</h3>
+                    <div class="selected-info">
+                        <span>Đã chọn:</span>
+                        <strong id="selectedCount">0 thuốc</strong>
+                    </div>
 
-                <div class="form-group">
-                    <label for="diseaseSelect">Chọn bệnh nền</label>
-                    <select id="diseaseSelect" class="form-control">
-                        <option value="">-- Chọn bệnh nền --</option>
-                    </select>
+                    <div class="drug-list premium-drug-list" id="drugList">
+                        <div class="empty-selection">
+                            <div>💊</div>
+                            <p>Chưa có thuốc nào được chọn.</p>
+                        </div>
+                    </div>
+
+                    <button id="clearDrugBtn" class="btn btn-light" style="margin-top: 16px;">
+                        Xóa danh sách thuốc
+                    </button>
                 </div>
 
-                <button id="checkContraBtn" class="btn btn-danger" style="width:100%; margin-bottom:12px;">
-                    Kiểm tra chống chỉ định
-                </button>
+                <div class="card check-card">
+                    <div class="card-heading">
+                        <div class="card-icon">🩺</div>
+                        <div>
+                            <h3>Bệnh nền của người dùng</h3>
+                            <p>Chọn bệnh nền để kiểm tra nguy cơ chống chỉ định.</p>
+                        </div>
+                    </div>
 
-                <button id="checkInteractionBtn" class="btn btn-warning" style="width:100%;">
-                    Kiểm tra tương tác thuốc
-                </button>
+                    <div class="form-group">
+                        <label for="diseaseSelect">Chọn bệnh nền</label>
+                        <select id="diseaseSelect" class="form-control">
+                            <option value="">-- Đang tải danh mục bệnh nền --</option>
+                        </select>
+                    </div>
 
-                <div class="guide-box">
-                    <strong>Lưu ý:</strong>
-                    <ul>
-                        <li>Kết quả chỉ mang tính hỗ trợ tham khảo.</li>
-                        <li>Không thay thế tư vấn từ bác sĩ hoặc dược sĩ.</li>
-                        <li>Nên kiểm tra kỹ với người có bệnh nền nghiêm trọng.</li>
-                    </ul>
+                    <div class="disease-preview">
+                        <span>Gợi ý kiểm tra:</span>
+                        <div class="quick-disease-tags">
+                            <button type="button" onclick="selectDiseaseQuick('Viêm loét dạ dày')">Viêm loét dạ dày</button>
+                            <button type="button" onclick="selectDiseaseQuick('Hen suyễn')">Hen suyễn</button>
+                            <button type="button" onclick="selectDiseaseQuick('Suy gan')">Suy gan</button>
+                            <button type="button" onclick="selectDiseaseQuick('Suy thận')">Suy thận</button>
+                        </div>
+                    </div>
                 </div>
+
             </div>
+
+            <aside class="check-side-panel">
+
+                <div class="card action-card">
+                    <h3>Thao tác kiểm tra</h3>
+                    <p>
+                        Chọn loại kiểm tra phù hợp với nhu cầu của bạn.
+                    </p>
+
+                    <button id="checkContraBtn" class="btn btn-danger action-button">
+                        Kiểm tra chống chỉ định
+                    </button>
+
+                    <button id="checkInteractionBtn" class="btn btn-warning action-button">
+                        Kiểm tra tương tác thuốc
+                    </button>
+
+                    <button id="checkAllBtn" class="btn btn-primary action-button">
+                        Kiểm tra toàn diện
+                    </button>
+                </div>
+
+                <div class="card guide-card">
+                    <h3>Hướng dẫn sử dụng</h3>
+
+                    <div class="guide-step">
+                        <span>1</span>
+                        <p>Chọn thuốc trong danh mục và bấm <strong>Thêm thuốc</strong>.</p>
+                    </div>
+
+                    <div class="guide-step">
+                        <span>2</span>
+                        <p>Chọn bệnh nền của người dùng, ví dụ: viêm loét dạ dày, suy gan.</p>
+                    </div>
+
+                    <div class="guide-step">
+                        <span>3</span>
+                        <p>Bấm kiểm tra để hệ thống phân tích nguy cơ và hiển thị kết quả.</p>
+                    </div>
+
+                    <div class="guide-warning">
+                        <strong>Lưu ý y tế:</strong>
+                        <p>Kết quả chỉ mang tính hỗ trợ tham khảo, không thay thế tư vấn chuyên môn.</p>
+                    </div>
+                </div>
+
+                <div class="card demo-card">
+                    <h3>Mẫu kiểm tra nhanh</h3>
+                    <p>Chọn nhanh dữ liệu mẫu để demo.</p>
+
+                    <button class="demo-case" onclick="useDemoCase('stomach')">
+                        Aspirin + Viêm loét dạ dày
+                    </button>
+
+                    <button class="demo-case" onclick="useDemoCase('interaction')">
+                        Warfarin + Aspirin
+                    </button>
+
+                    <button class="demo-case" onclick="useDemoCase('liver')">
+                        Paracetamol + Suy gan
+                    </button>
+                </div>
+
+            </aside>
         </div>
     </div>
 </section>
 
 <footer class="footer">
     <div class="container">
-        <p>© 2026 DrugSafe - Đồ án Công nghệ phần mềm</p>
+        <p>© 2026 DrugSafe - Kiểm tra chống chỉ định thuốc</p>
     </div>
 </footer>
 
 <script src="js/api.js"></script>
+<script src="js/store-data.js"></script>
 <script src="js/check.js"></script>
 
 </body>
