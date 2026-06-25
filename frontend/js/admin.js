@@ -10,22 +10,110 @@ document.addEventListener("DOMContentLoaded", function () {
     loadAllAdminData();
 });
 
-function protectAdminPage() {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
+function getLoggedInUser() {
+    const keys = [
+        "currentUser",
+        "drugSafeUser",
+        "user",
+        "loggedInUser"
+    ];
 
-    if (!user || user.email !== ADMIN_EMAIL || user.role !== "Admin") {
-        alert("Bạn không có quyền truy cập trang Admin.");
-        window.location.href = "login.html";
+    for (const key of keys) {
+        const raw = localStorage.getItem(key);
+
+        if (!raw) continue;
+
+        try {
+            const user = JSON.parse(raw);
+
+            if (user && user.email) {
+                return {
+                    id: user.id || user.userId || "",
+                    fullName:
+                        user.fullName ||
+                        user.name ||
+                        user.userName ||
+                        user.email ||
+                        "User",
+                    email: user.email,
+                    role: normalizeAdminRole(user.role)
+                };
+            }
+        } catch {
+            localStorage.removeItem(key);
+        }
     }
+
+    return null;
+}
+
+function normalizeAdminRole(role) {
+    const value = String(role || "").trim().toLowerCase();
+
+    if (
+        value === "admin" ||
+        value === "administrator" ||
+        value === "quản trị viên" ||
+        value === "quan tri vien"
+    ) {
+        return "Admin";
+    }
+
+    return "User";
+}
+
+function protectAdminPage() {
+    const user = getLoggedInUser();
+
+    if (!user) {
+        alert("Bạn cần đăng nhập để truy cập trang Admin.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    if (user.role !== "Admin") {
+        alert("Bạn không có quyền truy cập trang Admin.");
+        window.location.href = "index.html";
+        return;
+    }
+
+    // Đồng bộ lại dữ liệu user để các file khác dùng chung
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    localStorage.setItem("drugSafeUser", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
 }
 
 function loadAdminProfile() {
-    const user = JSON.parse(localStorage.getItem("user") || "null");
+    const user = getLoggedInUser();
 
     if (!user) return;
 
-    document.getElementById("adminName").textContent = user.fullName || user.FullName || "Quản trị viên hệ thống";
-    document.getElementById("adminEmail").textContent = user.email || user.Email || ADMIN_EMAIL;
+    const adminName = document.getElementById("adminName");
+    const adminEmail = document.getElementById("adminEmail");
+
+    if (adminName) {
+        adminName.textContent = user.fullName || "Quản trị viên hệ thống";
+    }
+
+    if (adminEmail) {
+        adminEmail.textContent = user.email || ADMIN_EMAIL;
+    }
+}
+
+function logoutAdmin() {
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("drugSafeUser");
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
+    showToastNotification(
+        "success",
+        "Đăng xuất thành công",
+        "Tài khoản quản trị đã đăng xuất khỏi hệ thống.",
+        "login.html",
+        1200
+    );
 }
 
 async function loadAllAdminData() {
@@ -394,11 +482,7 @@ function updateAdminStats() {
     document.getElementById("orderCount").textContent = orders.length;
 }
 
-function logoutAdmin() {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-}
+
 
 function getRiskClass(level) {
     if (level === "High") return "risk-high";

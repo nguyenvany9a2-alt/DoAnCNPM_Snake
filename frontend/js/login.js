@@ -1,113 +1,206 @@
 document.addEventListener("DOMContentLoaded", function () {
-    setupPasswordToggle();
-    updateCartBadgeIfExists();
+    clearLoginErrorOnly();
 
-    const savedEmail = localStorage.getItem("rememberedEmail");
-    if (savedEmail) {
-        document.getElementById("email").value = savedEmail;
-        document.getElementById("rememberMe").checked = true;
+    const loginForm = document.getElementById("loginForm");
+
+    if (!loginForm) {
+        console.error("Không tìm thấy form loginForm.");
+        return;
     }
 
-    document.getElementById("loginForm").addEventListener("submit", handleLogin);
+    loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        await loginUser();
+    });
 });
 
-function updateCartBadgeIfExists() {
-    if (typeof updateCartBadge === "function") {
-        updateCartBadge();
-    }
-}
+async function loginUser() {
+    const emailInput =
+        document.getElementById("email") ||
+        document.getElementById("loginEmail");
 
-function setupPasswordToggle() {
-    document.querySelectorAll(".toggle-password").forEach(button => {
-        button.addEventListener("click", function () {
-            const targetId = this.dataset.target;
-            const input = document.getElementById(targetId);
+    const passwordInput =
+        document.getElementById("password") ||
+        document.getElementById("loginPassword");
 
-            if (input.type === "password") {
-                input.type = "text";
-                this.textContent = "Ẩn";
-            } else {
-                input.type = "password";
-                this.textContent = "Hiện";
-            }
-        });
-    });
-}
-
-async function handleLogin(e) {
-    e.preventDefault();
-
-    clearMessage("loginMessage");
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const rememberMe = document.getElementById("rememberMe").checked;
-
-    if (!email || !password) {
-        showMessage("loginMessage", "Vui lòng nhập đầy đủ email và mật khẩu.");
+    if (!emailInput || !passwordInput) {
+        showLoginMessage("Không tìm thấy ô email hoặc mật khẩu.", "error");
         return;
     }
 
-    if (!isValidEmail(email)) {
-        showMessage("loginMessage", "Email không đúng định dạng. Ví dụ: nguyenvany@gmail.com");
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    // Quan trọng: xóa user cũ trước mỗi lần đăng nhập
+    clearCurrentUser();
+
+    if (!email) {
+        showLoginMessage("Vui lòng nhập email.", "error");
         return;
     }
 
-    const submitButton = document.querySelector(".auth-submit");
-    setButtonLoading(submitButton, true, "Đang đăng nhập...");
+    if (!password) {
+        showLoginMessage("Vui lòng nhập mật khẩu.", "error");
+        return;
+    }
+
+    const apiBase = window.API_BASE_URL || "http://localhost:5210/api";
 
     try {
-        const result = await apiRequest("/Auth/login", "POST", {
-            email: email,
-            password: password
+        const response = await fetch(`${apiBase}/Auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
         });
 
-        const user = result.user || result;
+        let data = null;
 
+        try {
+            data = await response.json();
+        } catch {
+            data = null;
+        }
+
+        // Nếu API trả lỗi thì KHÔNG lưu user
+        if (!response.ok) {
+            clearCurrentUser();
+
+            const errorMessage =
+                data?.message ||
+                data?.title ||
+                "Đăng nhập thất bại. Vui lòng kiểm tra email hoặc mật khẩu.";
+
+            showLoginMessage(errorMessage, "error");
+            return;
+        }
+
+        const user = normalizeLoginUser(data, email);
+
+        // Nếu không lấy được email/user thì coi như lỗi
+        if (!user || !user.email) {
+            clearCurrentUser();
+            showLoginMessage("Không lấy được thông tin tài khoản sau đăng nhập.", "error");
+            return;
+        }
+
+        // Cho phép cả User và Admin đăng nhập
+        const role = normalizeRole(user.role);
+
+        if (role !== "Admin" && role !== "User") {
+            clearCurrentUser();
+            showLoginMessage("Tài khoản không có quyền đăng nhập hệ thống.", "error");
+            return;
+        }
+
+        user.role = role;
+
+        // Chỉ lưu user SAU KHI đăng nhập thành công và role hợp lệ
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        localStorage.setItem("drugSafeUser", JSON.stringify(user));
         localStorage.setItem("user", JSON.stringify(user));
 
-        if (result.token) {
-            localStorage.setItem("token", result.token);
-        }
 
-        if (rememberMe) {
-            localStorage.setItem("rememberedEmail", email);
-        } else {
-            localStorage.removeItem("rememberedEmail");
-        }
 
-        showMessage("loginMessage", "Đăng nhập thành công. Đang chuyển trang...", "success");
+        showLoginMessage("Đăng nhập thành công.", "success");
 
-       setTimeout(() => {
-    if (
-        user.email === "admin@drugsafe.vn" &&
-        user.role === "Admin"
-    ) {
-        window.location.href = "admin.html";
-    } else {
-        window.location.href = "check.html";
-    }
-}, 900);    
+        setTimeout(() => {
+            if (user.role === "Admin") {
+                window.location.href = "admin.html";
+            } else {
+                window.location.href = "index.html";
+            }
+        }, 700);
 
     } catch (error) {
-        showMessage("loginMessage", "Đăng nhập thất bại. " + error.message);
-    } finally {
-        setButtonLoading(submitButton, false, "Đăng nhập");
+        clearCurrentUser();
+        console.error("Lỗi đăng nhập:", error);
+        showLoginMessage("Không kết nối được đến máy chủ API.", "error");
     }
 }
 
-function setButtonLoading(button, isLoading, text) {
-    button.disabled = isLoading;
-    button.textContent = text;
+function normalizeLoginUser(data, fallbackEmail) {
+    const userData =
+        data?.user ||
+        data?.data ||
+        data?.account ||
+        data;
 
-    if (isLoading) {
-        button.classList.add("loading");
-    } else {
-        button.classList.remove("loading");
+    if (!userData) {
+        return {
+            id: "",
+            fullName: fallbackEmail,
+            email: fallbackEmail,
+            role: "User"
+        };
+    }
+
+    return {
+        id: userData.id || userData.userId || "",
+        fullName:
+            userData.fullName ||
+            userData.name ||
+            userData.userName ||
+            userData.email ||
+            fallbackEmail,
+        email: userData.email || fallbackEmail,
+        role: userData.role || userData.userRole || "User"
+    };
+}
+
+function normalizeRole(role) {
+    const value = String(role || "").trim().toLowerCase();
+
+    if (
+        value === "admin" ||
+        value === "administrator" ||
+        value === "quản trị viên" ||
+        value === "quan tri vien"
+    ) {
+        return "Admin";
+    }
+
+    if (
+        value === "user" ||
+        value === "customer" ||
+        value === "người dùng" ||
+        value === "nguoi dung"
+    ) {
+        return "User";
+    }
+
+    return "User";
+}
+
+function clearCurrentUser() {
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("drugSafeUser");
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("user");
+}
+
+function clearLoginErrorOnly() {
+    const messageBox = document.getElementById("loginMessage");
+
+    if (messageBox) {
+        messageBox.textContent = "";
+        messageBox.style.display = "none";
     }
 }
 
-function showForgotPasswordMessage(e) {
-    e.preventDefault();
-    showMessage("loginMessage", "Chức năng quên mật khẩu đang được phát triển trong phiên bản demo.");
+function showLoginMessage(message, type) {
+    const messageBox = document.getElementById("loginMessage");
+
+    if (!messageBox) {
+        alert(message);
+        return;
+    }
+
+    messageBox.textContent = message;
+    messageBox.className = `message ${type}`;
+    messageBox.style.display = "block";
 }

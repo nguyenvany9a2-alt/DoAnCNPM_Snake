@@ -29,8 +29,8 @@
             <span class="premium-label">Search History</span>
             <h1>Lịch sử tra cứu thuốc</h1>
             <p>
-                Theo dõi lại toàn bộ kết quả kiểm tra chống chỉ định, tương tác thuốc
-                và mức độ cảnh báo đã thực hiện trên hệ thống DrugSafe.
+                Theo dõi lại toàn bộ kết quả kiểm tra chống chỉ định, tương tác thuốc,
+                gợi ý thuốc thay thế và mức độ cảnh báo đã thực hiện trên hệ thống DrugSafe.
             </p>
 
             <div class="hero-actions">
@@ -43,8 +43,8 @@
             <div class="hero-product-icon">📋</div>
             <h3>Theo dõi an toàn sử dụng thuốc</h3>
             <p>
-                Lịch sử giúp người dùng xem lại các cảnh báo quan trọng trước đó
-                và hỗ trợ quá trình tư vấn sử dụng thuốc.
+                Lịch sử giúp người dùng xem lại các cảnh báo quan trọng, thuốc thay thế
+                và khuyến nghị an toàn trước đó.
             </p>
         </div>
     </div>
@@ -81,7 +81,7 @@
             <div class="history-stat-card">
                 <div class="history-stat-icon success">✅</div>
                 <div>
-                    <span>An toàn</span>
+                    <span>An toàn / Gợi ý</span>
                     <strong id="safeHistory">0</strong>
                 </div>
             </div>
@@ -104,11 +104,11 @@
             <div id="historyMessage" class="message"></div>
 
             <div class="history-toolbar">
-                <input 
-                    type="text" 
-                    id="historySearch" 
-                    class="form-control" 
-                    placeholder="Tìm theo tên thuốc, bệnh nền hoặc nội dung cảnh báo..."
+                <input
+                    type="text"
+                    id="historySearch"
+                    class="form-control"
+                    placeholder="Tìm theo tên thuốc, bệnh nền, gợi ý hoặc nội dung cảnh báo..."
                 >
 
                 <select id="historyTypeFilter" class="form-control">
@@ -116,13 +116,15 @@
                     <option value="contraindication">Chống chỉ định</option>
                     <option value="interaction">Tương tác thuốc</option>
                     <option value="comprehensive">Kiểm tra toàn diện</option>
+                    <option value="recommendation">Gợi ý thuốc thay thế</option>
                 </select>
 
                 <select id="historyRiskFilter" class="form-control">
                     <option value="all">Tất cả mức độ</option>
                     <option value="High">High</option>
                     <option value="Medium">Medium</option>
-                    <option value="Low">Low/Safe</option>
+                    <option value="Low">Low / Safe</option>
+                    <option value="Recommendation">Recommendation</option>
                 </select>
             </div>
 
@@ -149,7 +151,9 @@
             <div>
                 <h3>Hướng dẫn đọc lịch sử</h3>
                 <p>
-                    Mỗi dòng là một lần kiểm tra. Nếu mức độ là <strong>High</strong>, người dùng nên tham khảo ý kiến bác sĩ hoặc dược sĩ trước khi sử dụng thuốc.
+                    Mỗi dòng là một lần kiểm tra. Nếu mức độ là <strong>High</strong>,
+                    người dùng nên tham khảo ý kiến bác sĩ hoặc dược sĩ trước khi sử dụng thuốc.
+                    Nếu loại là <strong>Gợi ý thuốc thay thế</strong>, hệ thống đã ghi nhận thuốc thay thế được đề xuất.
                 </p>
             </div>
         </div>
@@ -182,5 +186,6 @@
 <script src="js/api.js"></script>
 <script src="js/store-data.js"></script>
 <script src="js/history.js"></script>
-
+<script src="js/auth-ui.js"></script>
 </body>
+</html>

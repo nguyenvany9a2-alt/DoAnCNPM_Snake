@@ -1,0 +1,25 @@
+THÔNG TIN CÁC LIÊN KẾT DỰ ÁN DRUGSAFE
+
+1. Link GitHub Repository
+https://github.com/nguyenvany9a2-alt/DoAnCNPM_Snake
+
+2. Link Jira Project
+https://nguyenvany9a2.atlassian.net/jira/software/c/projects/CS/boards/2
+
+3. Link Figma Design
+https://share.balsamiq.com/c/vw8eRUKaoF646W3Gy9WUDv.jpg
+
+4. Link hệ thống chạy thực tế
+https://github.com/nguyenvany9a2-alt/DoAnCNPM_Snake
+
+5. Link video demo
+
+
+6. Tài khoản đăng nhập hệ thống
+Admin:
+Email: admin@drugsafe.vn
+Password: Admin@123
+
+User:
+Email: user@drugsafe.vn
+Password: User@123

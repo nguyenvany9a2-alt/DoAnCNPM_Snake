@@ -1,0 +1,24 @@
+MÔI TRƯỜNG CÀI ĐẶT HỆ THỐNG DRUGSAFE
+
+Backend:
+- ASP.NET Core Web API
+- .NET 9 SDK
+- Entity Framework Core
+- Swagger
+
+Frontend:
+- HTML5
+- CSS3
+- JavaScript
+- Live Server / GitHub Pages
+
+Database:
+- SQL Server LocalDB
+- SQL Server Management Studio hoặc sqlcmd
+
+Công cụ:
+- Visual Studio Code
+- Git
+- GitHub
+- Jira
+- Figma

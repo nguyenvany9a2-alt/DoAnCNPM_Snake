@@ -1,0 +1,15 @@
+TÀI KHOẢN ĐĂNG NHẬP HỆ THỐNG DRUGSAFE
+
+1. Tài khoản quản trị
+Email: admin@drugsafe.vn
+Password: Admin@123
+Role: Admin
+
+2. Tài khoản người dùng thử nghiệm
+Email: user@drugsafe.vn
+Password: User@123
+Role: User
+
+Ghi chú:
+- Tài khoản Admin dùng để truy cập trang quản trị hệ thống.
+- Tài khoản User dùng để kiểm tra thuốc, xem kết quả và lịch sử tra cứu.
